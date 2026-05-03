@@ -3,7 +3,7 @@
 <img src="https://img.shields.io/badge/SAPCIS-Smart%20Academic%20Planning%20%26%20Class%20Information%20System-1572FE?style=for-the-badge&logo=java&logoColor=white" alt="SAPCIS Banner"/>
 
 # 🎓 SAPCIS
-### Smart Academic Planning & Class Information System
+### Smart Academic Presence & Classroom Intelligence System
 
 [![Java](https://img.shields.io/badge/Java-17+-ED8B00?style=flat-square&logo=openjdk&logoColor=white)](https://openjdk.org/)
 [![JavaFX](https://img.shields.io/badge/JavaFX-17-blue?style=flat-square&logo=java&logoColor=white)](https://openjfx.io/)
