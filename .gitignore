@@ -1,0 +1,32 @@
+# ── Compiled output ──────────────────────────────────────────
+bin/
+*.class
+*.jar
+!lib/mssql-jdbc.jar
+
+# ── SQL files — exclude migration/fix scripts, keep only main schema ──
+diagnose_teacher_mapping.sql
+fix_duplicate_assignments.sql
+fix_sar_table.sql
+migrate_course_teacher_assignments.sql
+migrate_schedule_adjustment_requests.sql
+migrate_substitute_assignments.sql
+migrate_substitute_status.sql
+seed_dashboard_data.sql
+sapcis_db.sql
+
+# ── IDE / OS files ────────────────────────────────────────────
+.idea/
+*.iml
+.vscode/settings.json
+.classpath
+.project
+.settings/
+*.DS_Store
+Thumbs.db
+
+# ── JavaFX SDK (too large for GitHub) ────────────────────────
+sqljdbc_13.4.0.0_enu/
+
+# ── Build artifacts ───────────────────────────────────────────
+*.log

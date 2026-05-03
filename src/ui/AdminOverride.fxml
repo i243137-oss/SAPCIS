@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<StackPane alignment="CENTER" styleClass="uc-root"
+           xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="ui.AdminOverrideUIController"
+           stylesheets="@styles.css">
+
+    <VBox alignment="CENTER" spacing="14" styleClass="uc-card" maxWidth="460">
+        <Label text="⚠ Emergency Status Override" styleClass="uc-title"/>
+        <Label text="Override session status or initiate room move" styleClass="app-subtitle"/>
+        <Separator/>
+
+        <VBox spacing="4">
+            <Label text="SESSION ID" styleClass="form-label"/>
+            <TextField fx:id="sessionIdField" styleClass="form-field"/>
+        </VBox>
+        <HBox spacing="12">
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <Label text="NEW STATUS" styleClass="form-label"/>
+                <TextField fx:id="newStatusField" promptText="e.g. CANCELLED" styleClass="form-field"/>
+            </VBox>
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <Label text="ADMIN ACTION" styleClass="form-label"/>
+                <ComboBox fx:id="adminActionBox" maxWidth="Infinity" styleClass="combo-box">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="OVERRIDE_STATUS"/>
+                            <String fx:value="INITIATE_ROOM_MOVE"/>
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+            </VBox>
+        </HBox>
+        <VBox spacing="4">
+            <Label text="EMERGENCY REASON" styleClass="form-label"/>
+            <TextField fx:id="emergencyReasonField" promptText="Describe the emergency" styleClass="form-field"/>
+        </VBox>
+
+        <Button text="Execute Action" onAction="#onExecuteActionClicked" styleClass="btn-primary" maxWidth="Infinity"/>
+        <Label fx:id="statusLabel" styleClass="message-info" wrapText="true"/>
+    </VBox>
+</StackPane>

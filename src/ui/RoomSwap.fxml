@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<StackPane alignment="CENTER" styleClass="uc-root"
+           xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="ui.RoomSwapUIController"
+           stylesheets="@styles.css">
+
+    <VBox alignment="CENTER" spacing="14" styleClass="uc-card" maxWidth="460">
+        <Label text="🔄 Room Swap Request" styleClass="uc-title"/>
+        <Label text="Request a room change for your class" styleClass="app-subtitle"/>
+        <Separator/>
+
+        <HBox spacing="12">
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <Label text="CLASS ID" styleClass="form-label"/>
+                <TextField fx:id="classIdField" styleClass="form-field"/>
+            </VBox>
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <Label text="CAPACITY NEEDED" styleClass="form-label"/>
+                <TextField fx:id="capacityField" promptText="e.g. 50" styleClass="form-field"/>
+            </VBox>
+        </HBox>
+        <VBox spacing="4">
+            <Label text="REASON" styleClass="form-label"/>
+            <TextField fx:id="reasonField" promptText="Why do you need a swap?" styleClass="form-field"/>
+        </VBox>
+        <VBox spacing="4">
+            <Label text="SPECIFIC ROOM ID (OPTIONAL)" styleClass="form-label"/>
+            <TextField fx:id="specificRoomIdField" styleClass="form-field"/>
+        </VBox>
+        <VBox spacing="4">
+            <Label text="SWAP CONDITION" styleClass="form-label"/>
+            <ComboBox fx:id="conditionComboBox" maxWidth="Infinity" styleClass="combo-box">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="LET_ADMIN_CHOOSE"/>
+                        <String fx:value="REQUEST_SPECIFIC_ROOM"/>
+                    </FXCollections>
+                </items>
+            </ComboBox>
+        </VBox>
+
+        <Button text="Submit Swap Request" onAction="#onRequestSwapClicked" styleClass="btn-primary" maxWidth="Infinity"/>
+        <Label fx:id="statusLabel" styleClass="message-info" wrapText="true"/>
+    </VBox>
+</StackPane>

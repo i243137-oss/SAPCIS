@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+
+<!--
+    ============================================================
+     SAPCIS - Teacher Dashboard
+     Modern Light Theme with Course Dashboard Style
+     Color Palette: Hadfield Blue, Valhalla, Wash Me, Shiny Trumpet
+     Controller: ui.TeacherDashboardController
+    ============================================================
+-->
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ui.TeacherDashboardController"
+            prefWidth="1280.0"
+            prefHeight="780.0"
+            stylesheets="@styles.css"
+            style="-fx-background-color: #FBFCFE;">
+
+    <!-- =================== LEFT SIDEBAR =================== -->
+    <left>
+        <VBox spacing="18.0" prefWidth="260.0"
+              style="-fx-background-color: #FFFFFF;
+                     -fx-border-color: #E2E6EE;
+                     -fx-border-width: 0 1 0 0;">
+            <padding>
+                <Insets top="24.0" right="20.0" bottom="24.0" left="20.0" />
+            </padding>
+
+            <!-- Brand -->
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Circle radius="6" style="-fx-fill: #1572FE;" />
+                <Label text="SAPCIS"
+                       style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1572FE;" />
+            </HBox>
+            <Label text="Teacher Dashboard"
+                   style="-fx-font-size: 13px; -fx-text-fill: #6B7280;" />
+
+            <Separator style="-fx-background-color: #E2E6EE;" />
+
+            <!-- Profile card (Purple gradient like course cards) -->
+            <VBox spacing="10.0"
+                  style="-fx-background-color: linear-gradient(to bottom right, #C08CEE, #D4A8F5);
+                         -fx-background-radius: 16;
+                         -fx-padding: 18;
+                         -fx-effect: dropshadow(gaussian, rgba(192, 140, 238, 0.3), 12, 0.1, 0, 4);">
+                <Label text="PROFILE"
+                       style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: rgba(255,255,255,0.7);" />
+                <Label fx:id="profileNameLabel" text="—" wrapText="true"
+                       style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #FFFFFF;" />
+                <Label fx:id="profileUidLabel" text="ID: —"
+                       style="-fx-font-size: 12px; -fx-text-fill: rgba(255,255,255,0.85);" />
+                <Label fx:id="profileRoleLabel" text="Role: Teacher"
+                       style="-fx-font-size: 12px; -fx-text-fill: rgba(255,255,255,0.85);" />
+            </VBox>
+
+            <Separator style="-fx-background-color: #E2E6EE;" />
+
+            <Label text="NAVIGATION"
+                   style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6B7280;" />
+
+            <!-- Navigation Buttons -->
+            <Button fx:id="navMyScheduleButton" text="📅  My Schedule"
+                    maxWidth="Infinity" onAction="#onNavMyScheduleClicked"
+                    style="-fx-background-color: #E8F1FF; -fx-text-fill: #1572FE;
+                           -fx-font-weight: bold; -fx-font-size: 13px;
+                           -fx-background-radius: 12; -fx-padding: 12 16 12 16; -fx-cursor: hand;
+                           -fx-border-color: #1572FE; -fx-border-radius: 12; -fx-border-width: 1.5;" />
+
+            <Button fx:id="navSubstituteButton" text="🔄  Request Substitute"
+                    maxWidth="Infinity" onAction="#onNavSubstituteClicked"
+                    style="-fx-background-color: transparent; -fx-text-fill: #292940;
+                           -fx-font-size: 13px; -fx-background-radius: 12;
+                           -fx-border-color: #E2E6EE; -fx-border-radius: 12; -fx-border-width: 1.5;
+                           -fx-padding: 12 16 12 16; -fx-cursor: hand;" />
+
+            <Button fx:id="navRoomSwapButton" text="📥  Substitute Inbox"
+                    maxWidth="Infinity" onAction="#onNavRoomSwapClicked"
+                    style="-fx-background-color: transparent; -fx-text-fill: #292940;
+                           -fx-font-size: 13px; -fx-background-radius: 12;
+                           -fx-border-color: #E2E6EE; -fx-border-radius: 12; -fx-border-width: 1.5;
+                           -fx-padding: 12 16 12 16; -fx-cursor: hand;" />
+
+            <Region VBox.vgrow="ALWAYS" />
+
+            <Button fx:id="refreshButton" text="↻  Refresh" onAction="#onRefreshClicked"
+                    maxWidth="Infinity"
+                    styleClass="btn-secondary"
+                    style="-fx-padding: 10 0 10 0;" />
+
+            <Button fx:id="logoutButton" text="Logout" onAction="#onLogoutClicked"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: #FF3B30; -fx-text-fill: #FFFFFF;
+                           -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-radius: 12;
+                           -fx-padding: 10 0 10 0; -fx-cursor: hand;" />
+        </VBox>
+    </left>
+
+    <!-- =================== CENTER: 3-TAB LAYOUT =================== -->
+    <center>
+        <VBox spacing="0">
+            <!-- Top bar -->
+            <HBox alignment="CENTER_LEFT" spacing="14"
+                  style="-fx-background-color: #FFFFFF;
+                         -fx-effect: dropshadow(gaussian, rgba(41, 41, 64, 0.06), 8, 0, 0, 2);
+                         -fx-padding: 16 28 16 28;">
+                <HBox alignment="CENTER_LEFT" spacing="8">
+                    <Circle radius="5" style="-fx-fill: #C08CEE;" />
+                    <Label text="Teacher Dashboard"
+                           style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #292940;" />
+                </HBox>
+                <Region HBox.hgrow="ALWAYS" />
+                <Label fx:id="todayLabel"
+                       style="-fx-font-size: 13px; -fx-font-weight: 600; -fx-text-fill: #1572FE;" />
+            </HBox>
+
+            <!-- Main TabPane -->
+            <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE"
+                     VBox.vgrow="ALWAYS"
+                     style="-fx-background-color: #FBFCFE;">
+
+                <!-- ============================================================
+                     TAB 1: MY SCHEDULE
+                     ============================================================ -->
+                <Tab text="📅  My Schedule">
+                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+                                style="-fx-background-color: #FBFCFE; -fx-background: #FBFCFE;">
+                    <VBox spacing="18" style="-fx-background-color: #FBFCFE;">
+                        <padding><Insets top="22" right="26" bottom="22" left="26" /></padding>
+
+                        <!-- Action Console Card -->
+                        <GridPane fx:id="actionConsole" hgap="14" vgap="14" disable="true"
+                                  style="-fx-background-color: #FFFFFF;
+                                         -fx-background-radius: 16;
+                                         -fx-border-color: #E2E6EE; -fx-border-radius: 16;
+                                         -fx-padding: 20;
+                                         -fx-effect: dropshadow(gaussian, rgba(41, 41, 64, 0.08), 16, 0.1, 0, 4);">
+                            <columnConstraints>
+                                <ColumnConstraints minWidth="140" prefWidth="140" />
+                                <ColumnConstraints hgrow="ALWAYS" />
+                                <ColumnConstraints minWidth="140" prefWidth="140" />
+                                <ColumnConstraints hgrow="ALWAYS" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                            </rowConstraints>
+
+                            <!-- Row 0: Header + Selected Class -->
+                            <HBox alignment="CENTER_LEFT" spacing="10"
+                                  GridPane.rowIndex="0" GridPane.columnIndex="0">
+                                <Label text="⚡" style="-fx-font-size: 18px;" />
+                                <Label text="Selected:"
+                                       style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #6B7280;" />
+                            </HBox>
+                            <Label fx:id="selectedClassLabel"
+                                   text="— Click a row in the schedule below to begin —"
+                                   wrapText="true"
+                                   style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #292940;
+                                          -fx-background-color: #F8FAFC; -fx-background-radius: 10;
+                                          -fx-padding: 10 14 10 14;"
+                                   GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.columnSpan="3" />
+
+                            <!-- Row 1: Status + Reason -->
+                            <Label text="New Status:"
+                                   style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #6B7280;"
+                                   GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                            <ComboBox fx:id="statusCombo" promptText="Choose…" maxWidth="Infinity"
+                                      styleClass="form-field" style="-fx-pref-height: 42;"
+                                      GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                            <Label text="Est. Time / Reason:"
+                                   style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #6B7280;"
+                                   GridPane.rowIndex="1" GridPane.columnIndex="2" />
+                            <TextField fx:id="reasonField" promptText="e.g. 15 min late, projector issue"
+                                       styleClass="form-field" style="-fx-pref-height: 42;"
+                                       GridPane.rowIndex="1" GridPane.columnIndex="3" />
+
+                            <!-- Row 2: Buttons -->
+                            <HBox spacing="12" alignment="CENTER_RIGHT"
+                                  GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.columnSpan="4">
+                                <Label fx:id="consoleMessageLabel"
+                                       style="-fx-font-size: 13px; -fx-text-fill: #34C759; -fx-font-weight: 600;" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Button fx:id="clearSelectionButton" text="Clear"
+                                        onAction="#onClearSelectionClicked"
+                                        styleClass="btn-secondary" style="-fx-padding: 10 20 10 20;" />
+                                <Button fx:id="submitUpdateButton" text="Submit Update"
+                                        onAction="#onUpdateStatusClicked"
+                                        styleClass="btn-primary" style="-fx-padding: 10 24 10 24;" />
+                            </HBox>
+                        </GridPane>
+
+                        <!-- UC-02: Room Swap Console (Orange theme) -->
+                        <VBox fx:id="roomSwapConsole" spacing="12" disable="true"
+                              style="-fx-background-color: linear-gradient(to right, #FEF7EC, #FFFCF8);
+                                     -fx-background-radius: 16;
+                                     -fx-border-color: #EEAC5C; -fx-border-radius: 16; -fx-border-width: 2;
+                                     -fx-padding: 18 20 18 20;
+                                     -fx-effect: dropshadow(gaussian, rgba(238, 172, 92, 0.15), 12, 0.1, 0, 4);">
+
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="🏫" style="-fx-font-size: 18px;" />
+                                <Label text="Request Room Change"
+                                       style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #92400E;" />
+                                <Label text="(UC-02)"
+                                       style="-fx-font-size: 11px; -fx-text-fill: #B45309;" />
+                            </HBox>
+                            <Label text="Select a session above, enter the minimum required capacity and a reason, then submit."
+                                   wrapText="true"
+                                   style="-fx-font-size: 12px; -fx-text-fill: #78350F;" />
+
+                            <HBox spacing="14" alignment="CENTER_LEFT">
+                                <VBox spacing="6">
+                                    <Label text="Required Capacity"
+                                           style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #92400E;" />
+                                    <TextField fx:id="swapCapacityField" promptText="e.g. 60" prefWidth="120"
+                                               style="-fx-background-color: #FFFFFF; -fx-background-radius: 10;
+                                                      -fx-border-radius: 10; -fx-border-color: #EEAC5C;
+                                                      -fx-padding: 10 14 10 14; -fx-font-size: 13px;" />
+                                </VBox>
+                                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                                    <Label text="Reason for Room Change"
+                                           style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #92400E;" />
+                                    <TextField fx:id="swapReasonField" promptText="e.g. Current room too small…"
+                                               style="-fx-background-color: #FFFFFF; -fx-background-radius: 10;
+                                                      -fx-border-radius: 10; -fx-border-color: #EEAC5C;
+                                                      -fx-padding: 10 14 10 14; -fx-font-size: 13px;" />
+                                </VBox>
+                                <VBox spacing="6" alignment="BOTTOM_LEFT">
+                                    <Label text=" " style="-fx-font-size: 11px;" />
+                                    <Button text="Submit Swap Request" onAction="#onRequestSwapClicked"
+                                            styleClass="btn-orange" style="-fx-padding: 10 20 10 20;" />
+                                </VBox>
+                            </HBox>
+
+                            <Label fx:id="swapStatusLabel" text="" wrapText="true"
+                                   style="-fx-font-size: 13px; -fx-text-fill: #047857; -fx-font-weight: 600;" />
+                        </VBox>
+
+                        <!-- Weekly Schedule -->
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <Label text="📆" style="-fx-font-size: 16px;" />
+                            <Label text="My Weekly Schedule"
+                                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #292940;" />
+                        </HBox>
+
+                        <TabPane fx:id="weekTabPane" tabClosingPolicy="UNAVAILABLE"
+                                 VBox.vgrow="ALWAYS"
+                                 style="-fx-background-color: #FFFFFF; -fx-background-radius: 16;
+                                        -fx-effect: dropshadow(gaussian, rgba(41, 41, 64, 0.08), 16, 0.1, 0, 4);">
+                            <Tab text="Monday">
+                                <StackPane style="-fx-padding: 14; -fx-background-color: #FFFFFF;">
+                                    <TableView fx:id="mondayTable" style="-fx-font-size: 13px;" />
+                                </StackPane>
+                            </Tab>
+                            <Tab text="Tuesday">
+                                <StackPane style="-fx-padding: 14; -fx-background-color: #FFFFFF;">
+                                    <TableView fx:id="tuesdayTable" style="-fx-font-size: 13px;" />
+                                </StackPane>
+                            </Tab>
+                            <Tab text="Wednesday">
+                                <StackPane style="-fx-padding: 14; -fx-background-color: #FFFFFF;">
+                                    <TableView fx:id="wednesdayTable" style="-fx-font-size: 13px;" />
+                                </StackPane>
+                            </Tab>
+                            <Tab text="Thursday">
+                                <StackPane style="-fx-padding: 14; -fx-background-color: #FFFFFF;">
+                                    <TableView fx:id="thursdayTable" style="-fx-font-size: 13px;" />
+                                </StackPane>
+                            </Tab>
+                            <Tab text="Friday">
+                                <StackPane style="-fx-padding: 14; -fx-background-color: #FFFFFF;">
+                                    <TableView fx:id="fridayTable" style="-fx-font-size: 13px;" />
+                                </StackPane>
+                            </Tab>
+                        </TabPane>
+                    </VBox>
+                    </ScrollPane>
+                </Tab>
+
+                <!-- ============================================================
+                     TAB 2: REQUEST SUBSTITUTE (Teacher → Admin)
+                     ============================================================ -->
+                <Tab text="🔄  Request Substitute">
+                    <VBox spacing="18" style="-fx-background-color: #FBFCFE;">
+                        <padding><Insets top="24" right="26" bottom="24" left="26" /></padding>
+
+                        <!-- Header Card -->
+                        <VBox spacing="8"
+                              style="-fx-background-color: linear-gradient(to right, #1572FE, #4A94FF);
+                                     -fx-background-radius: 16;
+                                     -fx-padding: 24;
+                                     -fx-effect: dropshadow(gaussian, rgba(21, 114, 254, 0.25), 16, 0.1, 0, 6);">
+                            <Label text="Request a Substitute Teacher"
+                                   style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #FFFFFF;" />
+                            <Label text="Select one of your sessions below, enter a reason, and send the request to the Admin."
+                                   wrapText="true"
+                                   style="-fx-font-size: 13px; -fx-text-fill: rgba(255,255,255,0.85);" />
+                        </VBox>
+
+                        <!-- My Sessions Table Card -->
+                        <VBox spacing="10"
+                              style="-fx-background-color: #FFFFFF; -fx-background-radius: 16;
+                                     -fx-border-color: #E2E6EE; -fx-border-radius: 16;
+                                     -fx-padding: 18;
+                                     -fx-effect: dropshadow(gaussian, rgba(41, 41, 64, 0.08), 16, 0.1, 0, 4);">
+                            <Label text="MY SESSIONS — Select one to request a substitute"
+                                   style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #1572FE;" />
+                            <TableView fx:id="mySessionsTable" prefHeight="240"
+                                       style="-fx-font-size: 13px;">
+                                <columns>
+                                    <TableColumn fx:id="myColCourse"  text="Course"   prefWidth="260" />
+                                    <TableColumn fx:id="myColSection" text="Section"  prefWidth="90" />
+                                    <TableColumn fx:id="myColDay"     text="Day"      prefWidth="110" />
+                                    <TableColumn fx:id="myColTime"    text="Time"     prefWidth="140" />
+                                    <TableColumn fx:id="myColRoom"    text="Room"     prefWidth="100" />
+                                </columns>
+                            </TableView>
+                        </VBox>
+
+                        <!-- Reason + Send Card -->
+                        <VBox spacing="12"
+                              style="-fx-background-color: #F8FAFC; -fx-background-radius: 16;
+                                     -fx-border-color: #E2E6EE; -fx-border-radius: 16;
+                                     -fx-padding: 18;">
+                            <Label text="REASON FOR SUBSTITUTE REQUEST"
+                                   style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #6B7280;" />
+                            <TextField fx:id="subRequestReasonField"
+                                       promptText="e.g. Medical leave, attending conference, family emergency…"
+                                       styleClass="form-field" style="-fx-pref-height: 46;" />
+                            <HBox spacing="14" alignment="CENTER_LEFT">
+                                <Button text="Send Request to Admin" onAction="#onRequestSubstituteClicked"
+                                        styleClass="btn-primary" style="-fx-padding: 12 28 12 28;" />
+                                <Label fx:id="subRequestStatusLabel" text="" wrapText="true"
+                                       style="-fx-font-size: 13px; -fx-text-fill: #6B7280;" />
+                            </HBox>
+                        </VBox>
+                    </VBox>
+                </Tab>
+
+                <!-- ============================================================
+                     TAB 3: SUBSTITUTE INBOX (Admin → Teacher)
+                     ============================================================ -->
+                <Tab text="📥  Substitute Inbox">
+                    <VBox spacing="18" style="-fx-background-color: #FBFCFE;">
+                        <padding><Insets top="24" right="26" bottom="24" left="26" /></padding>
+
+                        <!-- Header Card (Orange theme) -->
+                        <VBox spacing="8"
+                              style="-fx-background-color: linear-gradient(to right, #EEAC5C, #F5C77E);
+                                     -fx-background-radius: 16;
+                                     -fx-padding: 24;
+                                     -fx-effect: dropshadow(gaussian, rgba(238, 172, 92, 0.25), 16, 0.1, 0, 6);">
+                            <Label text="Incoming Substitute Requests"
+                                   style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #FFFFFF;" />
+                            <Label text="The Admin has assigned you as a substitute for the sessions below. Accept or reject each request."
+                                   wrapText="true"
+                                   style="-fx-font-size: 13px; -fx-text-fill: rgba(255,255,255,0.9);" />
+                        </VBox>
+
+                        <!-- Inbox Table Card -->
+                        <VBox spacing="10"
+                              style="-fx-background-color: #FFFFFF; -fx-background-radius: 16;
+                                     -fx-border-color: #E2E6EE; -fx-border-radius: 16;
+                                     -fx-padding: 18;
+                                     -fx-effect: dropshadow(gaussian, rgba(41, 41, 64, 0.08), 16, 0.1, 0, 4);"
+                              VBox.vgrow="ALWAYS">
+                            <Label text="PENDING REQUESTS — Select one to accept or reject"
+                                   style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #EEAC5C;" />
+                            <TableView fx:id="subInboxTable" prefHeight="280"
+                                       style="-fx-font-size: 13px;" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="subInColId"     text="Request ID"      prefWidth="110" />
+                                    <TableColumn fx:id="subInColCourse" text="Course"           prefWidth="220" />
+                                    <TableColumn fx:id="subInColDay"    text="Day"              prefWidth="100" />
+                                    <TableColumn fx:id="subInColTime"   text="Time"             prefWidth="120" />
+                                    <TableColumn fx:id="subInColFrom"   text="Original Teacher" prefWidth="160" />
+                                    <TableColumn fx:id="subInColReason" text="Reason"           prefWidth="200" />
+                                </columns>
+                            </TableView>
+                        </VBox>
+
+                        <!-- Action buttons -->
+                        <HBox spacing="14" alignment="CENTER_LEFT">
+                            <Button text="✓  Accept" onAction="#onAcceptSubstitute"
+                                    styleClass="btn-success" style="-fx-padding: 12 32 12 32;" />
+                            <Button text="✗  Reject" onAction="#onRejectSubstitute"
+                                    style="-fx-background-color: #FF3B30; -fx-text-fill: white;
+                                           -fx-font-weight: bold; -fx-background-radius: 12;
+                                           -fx-padding: 12 32 12 32; -fx-font-size: 14px;
+                                           -fx-cursor: hand;" />
+                            <Label fx:id="subInboxStatusLabel" text=""
+                                   style="-fx-font-size: 13px; -fx-text-fill: #6B7280; -fx-font-weight: 600;" />
+                        </HBox>
+                    </VBox>
+                </Tab>
+
+            </TabPane>
+        </VBox>
+    </center>
+</BorderPane>

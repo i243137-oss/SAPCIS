@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane alignment="CENTER" styleClass="uc-root"
+           xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="ui.AdminReportUIController"
+           stylesheets="@styles.css">
+
+    <VBox alignment="CENTER" spacing="16" styleClass="uc-card" maxWidth="440">
+        <Label text="📊 Campus Analytics Reports" styleClass="uc-title"/>
+        <Label text="Generate classroom utilization or faculty delay reports" styleClass="app-subtitle"/>
+        <Separator/>
+
+        <VBox spacing="4">
+            <Label text="REPORT TYPE" styleClass="form-label"/>
+            <TextField fx:id="reportTypeField" promptText="e.g. Classroom Utilization" styleClass="form-field"/>
+        </VBox>
+        <VBox spacing="4">
+            <Label text="DATE RANGE" styleClass="form-label"/>
+            <TextField fx:id="dateRangeField" promptText="e.g. Last 30 Days" styleClass="form-field"/>
+        </VBox>
+
+        <Button text="Generate Report" onAction="#onGenerateReportClicked" styleClass="btn-success" maxWidth="Infinity"/>
+        <Label fx:id="validationError" styleClass="message-error" wrapText="true"/>
+    </VBox>
+</StackPane>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<StackPane alignment="CENTER" styleClass="uc-root"
+           xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="ui.AdminRulesUIController"
+           stylesheets="@styles.css">
+
+    <VBox alignment="CENTER" spacing="14" styleClass="uc-card" maxWidth="460">
+        <Label text="📏 Campus Rules Configuration" styleClass="uc-title"/>
+        <Label text="Set room capacity or global faculty rules" styleClass="app-subtitle"/>
+        <Separator/>
+
+        <VBox spacing="4">
+            <Label text="RULE CATEGORY" styleClass="form-label"/>
+            <ComboBox fx:id="categoryComboBox" maxWidth="Infinity" styleClass="combo-box">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="MAX_CAPACITY"/>
+                        <String fx:value="GLOBAL_FACULTY"/>
+                    </FXCollections>
+                </items>
+            </ComboBox>
+        </VBox>
+        <HBox spacing="12">
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <Label text="ROOM ID" styleClass="form-label"/>
+                <TextField fx:id="roomIdField" styleClass="form-field"/>
+            </VBox>
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <Label text="CAPACITY VALUE" styleClass="form-label"/>
+                <TextField fx:id="capacityValueField" promptText="e.g. 50" styleClass="form-field"/>
+            </VBox>
+        </HBox>
+        <VBox spacing="4">
+            <Label text="MAX CLASSES PER TEACHER (GLOBAL)" styleClass="form-label"/>
+            <TextField fx:id="maxClassesField" promptText="e.g. 3" styleClass="form-field"/>
+        </VBox>
+
+        <Button text="Apply Rule" onAction="#onApplyRuleClicked" styleClass="btn-success" maxWidth="Infinity"/>
+        <Label fx:id="statusLabel" styleClass="message-info" wrapText="true"/>
+    </VBox>
+</StackPane>

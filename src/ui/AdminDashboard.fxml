@@ -1,0 +1,697 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+
+<!--
+    ============================================================
+     SAPCIS - Admin Dashboard
+     Modern Light Theme with Course Dashboard Style
+     Color Palette: Hadfield Blue, Valhalla, Wash Me
+     Controller: ui.AdminDashboardController
+    ============================================================
+-->
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ui.AdminDashboardController"
+            prefWidth="1320.0" prefHeight="800.0"
+            stylesheets="@styles.css"
+            style="-fx-background-color: #FBFCFE;">
+
+    <!-- =================== LEFT SIDEBAR =================== -->
+    <left>
+        <VBox spacing="18.0" prefWidth="260.0"
+              style="-fx-background-color: #FFFFFF;
+                     -fx-border-color: #E2E6EE;
+                     -fx-border-width: 0 1 0 0;">
+            <padding><Insets top="24" right="20" bottom="24" left="20" /></padding>
+
+            <!-- Brand -->
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Circle radius="6" style="-fx-fill: #1572FE;" />
+                <Label text="SAPCIS"
+                       style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1572FE;" />
+            </HBox>
+            <Label text="Admin Dashboard"
+                   style="-fx-font-size: 13px; -fx-text-fill: #6B7280;" />
+
+            <Separator style="-fx-background-color: #E2E6EE;" />
+
+            <!-- Profile Card (Dark gradient) -->
+            <VBox spacing="10.0"
+                  style="-fx-background-color: linear-gradient(to bottom right, #292940, #3D3D5C);
+                         -fx-background-radius: 16;
+                         -fx-padding: 18;
+                         -fx-effect: dropshadow(gaussian, rgba(41, 41, 64, 0.3), 12, 0.1, 0, 4);">
+                <Label text="PROFILE"
+                       style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: rgba(255,255,255,0.6);" />
+                <Label fx:id="profileNameLabel" text="—" wrapText="true"
+                       style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #FFFFFF;" />
+                <Label fx:id="profileUidLabel" text="ID: —"
+                       style="-fx-font-size: 12px; -fx-text-fill: rgba(255,255,255,0.8);" />
+                <Label fx:id="profileRoleLabel" text="Role: Admin"
+                       style="-fx-font-size: 12px; -fx-text-fill: rgba(255,255,255,0.8);" />
+            </VBox>
+
+            <Separator style="-fx-background-color: #E2E6EE;" />
+            <Region VBox.vgrow="ALWAYS" />
+
+            <Button fx:id="logoutButton" text="Logout" onAction="#onLogoutClicked" maxWidth="Infinity"
+                    style="-fx-background-color: #FF3B30; -fx-text-fill: #FFFFFF;
+                           -fx-font-size: 13px; -fx-font-weight: bold;
+                           -fx-background-radius: 12; -fx-padding: 12 0 12 0; -fx-cursor: hand;" />
+        </VBox>
+    </left>
+
+    <!-- =================== CENTER CONTENT =================== -->
+    <center>
+        <VBox spacing="16.0">
+            <padding><Insets top="22" right="26" bottom="22" left="26" /></padding>
+
+            <!-- Header -->
+            <HBox alignment="CENTER_LEFT" spacing="14">
+                <HBox alignment="CENTER_LEFT" spacing="8">
+                    <Circle radius="5" style="-fx-fill: #292940;" />
+                    <Label text="Administration Console"
+                           style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #292940;" />
+                </HBox>
+                <Region HBox.hgrow="ALWAYS" />
+                <Label fx:id="todayLabel"
+                       style="-fx-font-size: 13px; -fx-font-weight: 600; -fx-text-fill: #1572FE;" />
+            </HBox>
+
+            <TabPane fx:id="adminTabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS"
+                     style="-fx-background-color: #FFFFFF; -fx-background-radius: 16;
+                            -fx-effect: dropshadow(gaussian, rgba(41, 41, 64, 0.08), 16, 0.1, 0, 4);">
+
+                <!-- ====== TAB 1: Campus Core Setup ====== -->
+                <Tab text="🏫 Campus Core Setup">
+                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER"
+                                style="-fx-background-color: transparent; -fx-background: transparent;">
+                    <StackPane>
+                        <padding><Insets top="20" right="20" bottom="20" left="20" /></padding>
+                        <VBox spacing="18.0">
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Label text="🏗️" style="-fx-font-size: 18px;" />
+                                <Label text="Add New Entity"
+                                       style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #292940;" />
+                            </HBox>
+
+                            <HBox spacing="12.0" alignment="CENTER_LEFT">
+                                <Label text="What to add:" style="-fx-font-size: 13px; -fx-text-fill: #6B7280;" />
+                                <ComboBox fx:id="setupEntityCombo" promptText="Select entity type" prefWidth="260"
+                                          styleClass="form-field" />
+                            </HBox>
+
+                            <Separator style="-fx-background-color: #E2E6EE;" />
+
+                            <!-- Department form -->
+                            <VBox fx:id="deptForm" spacing="12" managed="false" visible="false"
+                                  style="-fx-background-color: #F8FAFC; -fx-background-radius: 16;
+                                         -fx-border-color: #E2E6EE; -fx-border-radius: 16; -fx-padding: 20;">
+                                <Label text="Add Department" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #292940;" />
+                                <HBox spacing="14" alignment="CENTER_LEFT">
+                                    <TextField fx:id="deptIdField" promptText="Dept ID (e.g. CS)" prefWidth="160"
+                                               styleClass="form-field" />
+                                    <TextField fx:id="deptNameField" promptText="Full Name (e.g. Computer Science)" HBox.hgrow="ALWAYS"
+                                               styleClass="form-field" />
+                                    <Button text="Save" onAction="#onAddDeptClicked" styleClass="btn-primary" />
+                                </HBox>
+                            </VBox>
+
+                            <!-- Batch form -->
+                            <VBox fx:id="batchForm" spacing="12" managed="false" visible="false"
+                                  style="-fx-background-color: #F8FAFC; -fx-background-radius: 16;
+                                         -fx-border-color: #E2E6EE; -fx-border-radius: 16; -fx-padding: 20;">
+                                <Label text="Add Batch" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #292940;" />
+                                <HBox spacing="14" alignment="CENTER_LEFT">
+                                    <TextField fx:id="batchIdField" promptText="Batch ID (e.g. B2025)" prefWidth="200"
+                                               styleClass="form-field" />
+                                    <TextField fx:id="batchYearField" promptText="Year (e.g. 2025)" prefWidth="160"
+                                               styleClass="form-field" />
+                                    <Button text="Save" onAction="#onAddBatchClicked" styleClass="btn-primary" />
+                                </HBox>
+                            </VBox>
+
+                            <!-- Course form -->
+                            <VBox fx:id="courseForm" spacing="12" managed="false" visible="false"
+                                  style="-fx-background-color: #F8FAFC; -fx-background-radius: 16;
+                                         -fx-border-color: #E2E6EE; -fx-border-radius: 16; -fx-padding: 20;">
+                                <Label text="Add Course" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #292940;" />
+                                <HBox spacing="14" alignment="CENTER_LEFT">
+                                    <TextField fx:id="courseCodeField" promptText="Code (CS101)" prefWidth="150"
+                                               styleClass="form-field" />
+                                    <TextField fx:id="courseNameField" promptText="Course Name" HBox.hgrow="ALWAYS"
+                                               styleClass="form-field" />
+                                    <TextField fx:id="courseCreditsField" promptText="Credits" prefWidth="90"
+                                               styleClass="form-field" />
+                                    <Button text="Save" onAction="#onAddCourseClicked" styleClass="btn-primary" />
+                                </HBox>
+                            </VBox>
+
+                            <!-- Room form -->
+                            <VBox fx:id="roomForm" spacing="12" managed="false" visible="false"
+                                  style="-fx-background-color: #F8FAFC; -fx-background-radius: 16;
+                                         -fx-border-color: #E2E6EE; -fx-border-radius: 16; -fx-padding: 20;">
+                                <Label text="Add Room" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #292940;" />
+                                <HBox spacing="14" alignment="CENTER_LEFT">
+                                    <TextField fx:id="roomIdField" promptText="Room ID" prefWidth="130"
+                                               styleClass="form-field" />
+                                    <TextField fx:id="roomNameField" promptText="Room Name" HBox.hgrow="ALWAYS"
+                                               styleClass="form-field" />
+                                    <TextField fx:id="roomCapacityField" promptText="Capacity" prefWidth="100"
+                                               styleClass="form-field" />
+                                    <Button text="Save" onAction="#onAddRoomClicked" styleClass="btn-primary" />
+                                </HBox>
+                            </VBox>
+
+                            <!-- Section form -->
+                            <VBox fx:id="sectionForm" spacing="12" managed="false" visible="false"
+                                  style="-fx-background-color: #F8FAFC; -fx-background-radius: 16;
+                                         -fx-border-color: #E2E6EE; -fx-border-radius: 16; -fx-padding: 20;">
+                                <Label text="Add Section to Dept + Batch" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #292940;" />
+                                <HBox spacing="14" alignment="CENTER_LEFT">
+                                    <ComboBox fx:id="secBatchCombo" promptText="Batch" prefWidth="180" styleClass="form-field" />
+                                    <ComboBox fx:id="secDeptCombo" promptText="Department" prefWidth="240" styleClass="form-field" />
+                                    <TextField fx:id="secNameField" promptText="Section (e.g. A)" prefWidth="120"
+                                               styleClass="form-field" />
+                                    <Button text="Save" onAction="#onAddSectionClicked" styleClass="btn-primary" />
+                                </HBox>
+                            </VBox>
+
+                            <!-- Teacher form -->
+                            <VBox fx:id="teacherForm" spacing="14" managed="false" visible="false"
+                                  style="-fx-background-color: linear-gradient(to right, #E8F1FF, #F0F6FF);
+                                         -fx-background-radius: 16;
+                                         -fx-border-color: #1572FE; -fx-border-radius: 16; -fx-border-width: 2;
+                                         -fx-padding: 20;">
+                                <Label text="Create Teacher Account"
+                                       style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1572FE;" />
+                                <Label text="Creates a new Teacher user in the system."
+                                       wrapText="true"
+                                       style="-fx-font-size: 12px; -fx-text-fill: #6B7280;" />
+                                <HBox spacing="14" alignment="CENTER_LEFT">
+                                    <TextField fx:id="teacherNameField" promptText="Full Name" HBox.hgrow="ALWAYS"
+                                               styleClass="form-field" />
+                                    <TextField fx:id="teacherEmailField" promptText="Email" prefWidth="260"
+                                               styleClass="form-field" />
+                                    <PasswordField fx:id="teacherPasswordField" promptText="Password (min 6)" prefWidth="200"
+                                               styleClass="form-field" />
+                                    <Button text="Add Teacher" onAction="#onAddTeacherClicked" styleClass="btn-primary" />
+                                </HBox>
+                                <Label fx:id="teacherFormMessageLabel" text=""
+                                       style="-fx-font-size: 13px; -fx-text-fill: #34C759; -fx-font-weight: 600;" />
+                            </VBox>
+                        </VBox>
+                    </StackPane>
+                    </ScrollPane>
+                </Tab>
+
+                <!-- ====== TAB 2: Campus Policies & Rules ====== -->
+                <Tab text="📏 Campus Policies &amp; Rules">
+                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER"
+                                style="-fx-background-color: transparent; -fx-background: transparent;">
+                    <StackPane>
+                        <padding><Insets top="20" right="20" bottom="20" left="20" /></padding>
+                        <VBox spacing="18.0">
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Label text="⚙️" style="-fx-font-size: 18px;" />
+                                <Label text="Rule Configuration"
+                                       style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #292940;" />
+                            </HBox>
+
+                            <HBox spacing="12.0" alignment="CENTER_LEFT">
+                                <Label text="Select rule:" style="-fx-font-size: 13px; -fx-text-fill: #6B7280;" />
+                                <ComboBox fx:id="ruleTypeCombo" promptText="Choose rule to configure" prefWidth="340"
+                                          styleClass="form-field" />
+                            </HBox>
+
+                            <Separator style="-fx-background-color: #E2E6EE;" />
+
+                            <!-- Max Courses -->
+                            <VBox fx:id="maxCoursesForm" spacing="12" managed="false" visible="false"
+                                  style="-fx-background-color: #F8FAFC; -fx-background-radius: 16;
+                                         -fx-border-color: #E2E6EE; -fx-border-radius: 16; -fx-padding: 20;">
+                                <Label text="Max Courses per Teacher" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #292940;" />
+                                <HBox spacing="14" alignment="CENTER_LEFT">
+                                    <TextField fx:id="maxCoursesField" promptText="e.g. 5" prefWidth="140" styleClass="form-field" />
+                                    <Button text="Save Rule" onAction="#onSaveMaxCoursesRule" styleClass="btn-primary" />
+                                </HBox>
+                            </VBox>
+
+                            <!-- Max Classes Per Day -->
+                            <VBox fx:id="maxClassesForm" spacing="12" managed="false" visible="false"
+                                  style="-fx-background-color: #F8FAFC; -fx-background-radius: 16;
+                                         -fx-border-color: #E2E6EE; -fx-border-radius: 16; -fx-padding: 20;">
+                                <Label text="Max Classes per Day per Teacher" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #292940;" />
+                                <HBox spacing="14" alignment="CENTER_LEFT">
+                                    <TextField fx:id="maxClassesPerDayField" promptText="e.g. 3" prefWidth="140" styleClass="form-field" />
+                                    <Button text="Save Rule" onAction="#onSaveMaxClassesPerDayRule" styleClass="btn-primary" />
+                                </HBox>
+                            </VBox>
+
+                            <!-- Max Duration -->
+                            <VBox fx:id="maxDurationForm" spacing="12" managed="false" visible="false"
+                                  style="-fx-background-color: #F8FAFC; -fx-background-radius: 16;
+                                         -fx-border-color: #E2E6EE; -fx-border-radius: 16; -fx-padding: 20;">
+                                <Label text="Max Class Duration (minutes)" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #292940;" />
+                                <HBox spacing="14" alignment="CENTER_LEFT">
+                                    <TextField fx:id="maxDurationField" promptText="e.g. 90" prefWidth="140" styleClass="form-field" />
+                                    <Button text="Save Rule" onAction="#onSaveMaxDurationRule" styleClass="btn-primary" />
+                                </HBox>
+                            </VBox>
+
+                            <!-- Rest Gap -->
+                            <VBox fx:id="restGapForm" spacing="12" managed="false" visible="false"
+                                  style="-fx-background-color: #F8FAFC; -fx-background-radius: 16;
+                                         -fx-border-color: #E2E6EE; -fx-border-radius: 16; -fx-padding: 20;">
+                                <Label text="Min Rest Gap Between Classes (minutes)" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #292940;" />
+                                <HBox spacing="14" alignment="CENTER_LEFT">
+                                    <TextField fx:id="restGapField" promptText="e.g. 15" prefWidth="140" styleClass="form-field" />
+                                    <Button text="Save Rule" onAction="#onSaveRestGapRule" styleClass="btn-primary" />
+                                </HBox>
+                            </VBox>
+
+                            <!-- Room Override -->
+                            <VBox fx:id="roomRuleForm" spacing="12" managed="false" visible="false"
+                                  style="-fx-background-color: #F8FAFC; -fx-background-radius: 16;
+                                         -fx-border-color: #E2E6EE; -fx-border-radius: 16; -fx-padding: 20;">
+                                <Label text="Room Capacity Override" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #292940;" />
+                                <HBox spacing="14" alignment="CENTER_LEFT">
+                                    <ComboBox fx:id="ruleRoomCombo" promptText="Select Room" prefWidth="240" styleClass="form-field" />
+                                    <TextField fx:id="roomCapOverrideField" promptText="New Capacity" prefWidth="140" styleClass="form-field" />
+                                    <Button text="Save Rule" onAction="#onSaveRoomRuleClicked" styleClass="btn-primary" />
+                                </HBox>
+                            </VBox>
+
+                            <!-- Opening Time -->
+                            <VBox fx:id="openingTimeForm" spacing="12" managed="false" visible="false"
+                                  style="-fx-background-color: linear-gradient(to right, #ECFDF5, #F0FDF4);
+                                         -fx-background-radius: 16;
+                                         -fx-border-color: #34C759; -fx-border-radius: 16; -fx-border-width: 2;
+                                         -fx-padding: 20;">
+                                <Label text="University Opening Time" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #166534;" />
+                                <Label text="No class may start before this time. Format: HH:mm"
+                                       style="-fx-font-size: 12px; -fx-text-fill: #6B7280;" />
+                                <HBox spacing="14" alignment="CENTER_LEFT">
+                                    <TextField fx:id="openingTimeField" promptText="e.g. 08:00" prefWidth="160" styleClass="form-field" />
+                                    <Button text="Save Rule" onAction="#onSaveOpeningTimeRule" styleClass="btn-success" />
+                                </HBox>
+                            </VBox>
+
+                            <!-- Closing Time -->
+                            <VBox fx:id="closingTimeForm" spacing="12" managed="false" visible="false"
+                                  style="-fx-background-color: linear-gradient(to right, #FEF7EC, #FFFCF8);
+                                         -fx-background-radius: 16;
+                                         -fx-border-color: #EEAC5C; -fx-border-radius: 16; -fx-border-width: 2;
+                                         -fx-padding: 20;">
+                                <Label text="University Closing Time" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #9A3412;" />
+                                <Label text="No class may end after this time. Format: HH:mm. Conflicting classes will be removed for reassignment."
+                                       wrapText="true"
+                                       style="-fx-font-size: 12px; -fx-text-fill: #6B7280;" />
+                                <HBox spacing="14" alignment="CENTER_LEFT">
+                                    <TextField fx:id="closingTimeField" promptText="e.g. 18:00" prefWidth="160" styleClass="form-field" />
+                                    <Button text="Save Rule" onAction="#onSaveClosingTimeRule" styleClass="btn-orange" />
+                                </HBox>
+                            </VBox>
+
+                            <!-- Removed Classes for Reassignment -->
+                            <VBox fx:id="removedClassesForm" spacing="12" managed="false" visible="false"
+                                  style="-fx-background-color: #FEF2F2;
+                                         -fx-background-radius: 16;
+                                         -fx-border-color: #FF3B30; -fx-border-radius: 16; -fx-border-width: 2;
+                                         -fx-padding: 20;">
+                                <HBox alignment="CENTER_LEFT" spacing="10">
+                                    <Label text="⚠️" style="-fx-font-size: 18px;" />
+                                    <Label text="Classes Removed Due to Time Conflict"
+                                           style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #B91C1C;" />
+                                </HBox>
+                                <Label text="The following classes violated the new opening/closing time rules and have been removed. Please reassign them using the Timetable Assignment tab."
+                                       wrapText="true"
+                                       style="-fx-font-size: 12px; -fx-text-fill: #7F1D1D;" />
+                                <TableView fx:id="removedClassesTable" prefHeight="200" style="-fx-font-size: 12px;">
+                                    <columns>
+                                        <TableColumn fx:id="remColTeacher" text="Teacher" prefWidth="150" />
+                                        <TableColumn fx:id="remColCourse" text="Course" prefWidth="180" />
+                                        <TableColumn fx:id="remColDay" text="Day" prefWidth="100" />
+                                        <TableColumn fx:id="remColTime" text="Original Time" prefWidth="140" />
+                                        <TableColumn fx:id="remColRoom" text="Room" prefWidth="100" />
+                                        <TableColumn fx:id="remColReason" text="Conflict Reason" prefWidth="180" />
+                                    </columns>
+                                </TableView>
+                                <Button text="Clear List" onAction="#onClearRemovedClasses" styleClass="btn-secondary" />
+                            </VBox>
+                        </VBox>
+                    </StackPane>
+                    </ScrollPane>
+                </Tab>
+
+                <!-- ====== TAB 3: Teacher Timetable Assignment ====== -->
+                <Tab text="📅 Timetable Assignment">
+                    <StackPane>
+                        <padding><Insets top="20" right="20" bottom="20" left="20" /></padding>
+                        <VBox spacing="18.0"
+                              style="-fx-background-color: #FFFFFF; -fx-background-radius: 16;
+                                     -fx-border-color: #E2E6EE; -fx-border-radius: 16; -fx-padding: 24;">
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Label text="👨‍🏫" style="-fx-font-size: 18px;" />
+                                <Label text="Assign Teacher to Timetable Slot"
+                                       style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #292940;" />
+                            </HBox>
+
+                            <HBox spacing="14.0" alignment="CENTER_LEFT">
+                                <VBox spacing="6">
+                                    <Label text="Teacher" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6B7280;" />
+                                    <ComboBox fx:id="assignTeacherCombo" promptText="Select Teacher" prefWidth="220" styleClass="form-field" />
+                                </VBox>
+                                <VBox spacing="6">
+                                    <Label text="Batch" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6B7280;" />
+                                    <ComboBox fx:id="assignBatchCombo" promptText="Select Batch" prefWidth="160" styleClass="form-field" />
+                                </VBox>
+                                <VBox spacing="6">
+                                    <Label text="Department" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6B7280;" />
+                                    <ComboBox fx:id="assignDeptCombo" promptText="Select Dept" prefWidth="200" styleClass="form-field" />
+                                </VBox>
+                                <VBox spacing="6">
+                                    <Label text="Section" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6B7280;" />
+                                    <ComboBox fx:id="assignSectionCombo" promptText="Section" prefWidth="140" styleClass="form-field" />
+                                </VBox>
+                            </HBox>
+
+                            <HBox spacing="14.0" alignment="CENTER_LEFT">
+                                <VBox spacing="6">
+                                    <Label text="Course" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6B7280;" />
+                                    <ComboBox fx:id="assignCourseCombo" promptText="Select Course" prefWidth="280" styleClass="form-field" />
+                                </VBox>
+                                <VBox spacing="6">
+                                    <Label text="Day of Week" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6B7280;" />
+                                    <ComboBox fx:id="assignDayCombo" promptText="Day" prefWidth="180" styleClass="form-field" />
+                                </VBox>
+                            </HBox>
+
+                            <HBox spacing="14.0" alignment="CENTER_LEFT">
+                                <VBox spacing="6">
+                                    <Label text="Start Time" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6B7280;" />
+                                    <TextField fx:id="assignStartTimeField" promptText="HH:mm" prefWidth="120" styleClass="form-field" />
+                                </VBox>
+                                <VBox spacing="6">
+                                    <Label text="End Time" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6B7280;" />
+                                    <TextField fx:id="assignEndTimeField" promptText="HH:mm" prefWidth="120" styleClass="form-field" />
+                                </VBox>
+                                <VBox spacing="6">
+                                    <Label text="Room" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6B7280;" />
+                                    <ComboBox fx:id="assignRoomCombo" promptText="Select Room" prefWidth="240" styleClass="form-field" />
+                                </VBox>
+                            </HBox>
+
+                            <Separator style="-fx-background-color: #E2E6EE;" />
+
+                            <Button text="Assign to Timetable" onAction="#onAssignTimetableClicked"
+                                    maxWidth="Infinity" prefHeight="48"
+                                    styleClass="btn-primary" style="-fx-font-size: 15px;" />
+                        </VBox>
+                    </StackPane>
+                </Tab>
+
+                <!-- ====== TAB 4: Analytics & Reports ====== -->
+                <Tab text="📊 Analytics &amp; Reports">
+                    <VBox spacing="16.0">
+                        <padding><Insets top="20" right="20" bottom="20" left="20" /></padding>
+
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <Label text="📈" style="-fx-font-size: 18px;" />
+                            <Label text="Campus Reports &amp; Timetable Viewer"
+                                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #292940;" />
+                        </HBox>
+
+                        <HBox spacing="14.0" alignment="CENTER_LEFT"
+                              style="-fx-background-color: #F8FAFC; -fx-background-radius: 16;
+                                     -fx-border-color: #E2E6EE; -fx-border-radius: 16; -fx-padding: 16;">
+                            <VBox spacing="6">
+                                <Label text="Report Type" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6B7280;" />
+                                <ComboBox fx:id="reportTypeCombo" promptText="Select Report" prefWidth="260" styleClass="form-field" />
+                            </VBox>
+
+                            <HBox fx:id="dynamicInputArea" spacing="14" alignment="CENTER_LEFT">
+                                <VBox fx:id="dateRangeInputs" spacing="6" managed="false" visible="false">
+                                    <Label text="Date Range" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6B7280;" />
+                                    <HBox spacing="10">
+                                        <DatePicker fx:id="reportStartDate" promptText="Start" prefWidth="150" />
+                                        <DatePicker fx:id="reportEndDate" promptText="End" prefWidth="150" />
+                                    </HBox>
+                                </VBox>
+                                <VBox fx:id="teacherSelectInput" spacing="6" managed="false" visible="false">
+                                    <Label text="Select Teacher" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6B7280;" />
+                                    <ComboBox fx:id="reportTeacherCombo" promptText="Teacher" prefWidth="280" styleClass="form-field" />
+                                </VBox>
+                                <VBox fx:id="roomSelectInput" spacing="6" managed="false" visible="false">
+                                    <Label text="Select Room" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6B7280;" />
+                                    <ComboBox fx:id="reportRoomCombo" promptText="Room" prefWidth="260" styleClass="form-field" />
+                                </VBox>
+                            </HBox>
+
+                            <Region HBox.hgrow="ALWAYS" />
+                            <Button text="Generate Report" onAction="#onGenerateReportClicked" styleClass="btn-primary" />
+                        </HBox>
+
+                        <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS"
+                                    style="-fx-background-color: transparent; -fx-border-color: transparent;">
+                            <VBox fx:id="reportDisplayArea" spacing="12"
+                                  style="-fx-background-color: #FFFFFF; -fx-background-radius: 16;
+                                         -fx-border-color: #E2E6EE; -fx-border-radius: 16; -fx-padding: 24;">
+                                <Label text="Select a report type and click 'Generate Report' to view results."
+                                       style="-fx-font-size: 14px; -fx-text-fill: #9CA3AF; -fx-font-style: italic;" />
+                            </VBox>
+                        </ScrollPane>
+                    </VBox>
+                </Tab>
+
+                <!-- ====== TAB 5: Emergency Override ====== -->
+                <Tab text="⚠ Emergency Override">
+                    <VBox spacing="14.0">
+                        <padding><Insets top="20" right="20" bottom="20" left="20" /></padding>
+
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <Label text="🚨" style="-fx-font-size: 18px;" />
+                            <Label text="Emergency Status Override &amp; Room Swap"
+                                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #292940;" />
+                        </HBox>
+
+                        <HBox spacing="14.0" alignment="CENTER_LEFT"
+                              style="-fx-background-color: #F8FAFC; -fx-background-radius: 16;
+                                     -fx-border-color: #E2E6EE; -fx-border-radius: 16; -fx-padding: 16;">
+                            <VBox spacing="6">
+                                <Label text="Teacher" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6B7280;" />
+                                <ComboBox fx:id="overrideTeacherCombo" promptText="Select Teacher" prefWidth="280" styleClass="form-field" />
+                            </VBox>
+                            <VBox spacing="6">
+                                <Label text="Day of Week" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6B7280;" />
+                                <ComboBox fx:id="overrideDayCombo" promptText="Day" prefWidth="180" styleClass="form-field" />
+                            </VBox>
+                            <Button text="Search Sessions" onAction="#onSearchTeacherClicked" styleClass="btn-primary" />
+                        </HBox>
+
+                        <TableView fx:id="overrideSessionTable" prefHeight="200" VBox.vgrow="ALWAYS"
+                                   style="-fx-background-radius: 12; -fx-border-radius: 12;">
+                            <columns>
+                                <TableColumn fx:id="colAssignId" text="ID" prefWidth="60" />
+                                <TableColumn fx:id="colCourse" text="Course" prefWidth="180" />
+                                <TableColumn fx:id="colRoom" text="Room" prefWidth="140" />
+                                <TableColumn fx:id="colStart" text="Start" prefWidth="80" />
+                                <TableColumn fx:id="colEnd" text="End" prefWidth="80" />
+                                <TableColumn fx:id="colSection" text="Section" prefWidth="80" />
+                                <TableColumn fx:id="colStatus" text="Status" prefWidth="100" />
+                            </columns>
+                        </TableView>
+
+                        <GridPane fx:id="overrideActionPane" hgap="16" vgap="14"
+                                  managed="false" visible="false"
+                                  style="-fx-background-color: linear-gradient(to right, #FEF7EC, #FFFCF8);
+                                         -fx-background-radius: 16;
+                                         -fx-border-color: #EEAC5C; -fx-border-radius: 16; -fx-border-width: 2;
+                                         -fx-padding: 20;">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="ALWAYS" percentWidth="35" />
+                                <ColumnConstraints hgrow="ALWAYS" percentWidth="35" />
+                                <ColumnConstraints hgrow="ALWAYS" percentWidth="30" />
+                            </columnConstraints>
+
+                            <!-- Column 1: Override Status -->
+                            <VBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                <Label text="Override Status" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #92400E;" />
+                                <ComboBox fx:id="overrideStatusCombo" promptText="New Status" maxWidth="Infinity" styleClass="form-field" />
+                                <TextField fx:id="overrideReasonField" promptText="Emergency Reason" styleClass="form-field" />
+                                <Button text="Override Status" onAction="#onOverrideStatusClicked" maxWidth="Infinity"
+                                        style="-fx-background-color: #FF3B30; -fx-text-fill: #FFFFFF;
+                                               -fx-font-weight: bold; -fx-background-radius: 12;
+                                               -fx-padding: 12 0 12 0; -fx-cursor: hand;" />
+                            </VBox>
+
+                            <!-- Column 2: Change Day/Time -->
+                            <VBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                <Label text="Change Day / Time" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #92400E;" />
+                                <ComboBox fx:id="overrideNewDayCombo" promptText="New Day" maxWidth="Infinity" styleClass="form-field" />
+                                <HBox spacing="8">
+                                    <TextField fx:id="overrideNewStartField" promptText="Start (HH:mm)" HBox.hgrow="ALWAYS" styleClass="form-field" />
+                                    <TextField fx:id="overrideNewEndField" promptText="End (HH:mm)" HBox.hgrow="ALWAYS" styleClass="form-field" />
+                                </HBox>
+                                <Button text="Change Schedule" onAction="#onChangeScheduleClicked" maxWidth="Infinity" styleClass="btn-orange" />
+                            </VBox>
+
+                            <!-- Column 3: Swap Room -->
+                            <VBox spacing="10" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                                <Label text="Swap Room" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #92400E;" />
+                                <ComboBox fx:id="swapRoomCombo" promptText="Available Rooms" maxWidth="Infinity" styleClass="form-field" />
+                                <Region prefHeight="38" />
+                                <Button text="Swap Room" onAction="#onSwapRoomClicked" maxWidth="Infinity" styleClass="btn-primary" />
+                            </VBox>
+                        </GridPane>
+                    </VBox>
+                </Tab>
+
+                <!-- ====== TAB 6: Substitute Management ====== -->
+                <Tab text="👨‍🏫 Substitute Management">
+                    <ScrollPane fitToWidth="true" fitToHeight="true"
+                                style="-fx-background-color: transparent; -fx-background: transparent;">
+                    <HBox spacing="18.0">
+                        <padding><Insets top="20" right="20" bottom="20" left="20" /></padding>
+
+                        <VBox spacing="14" HBox.hgrow="ALWAYS" prefWidth="520"
+                              style="-fx-background-color: #FFFFFF; -fx-background-radius: 16;
+                                     -fx-border-color: #E2E6EE; -fx-border-radius: 16; -fx-padding: 18;">
+                            <Label text="Sessions Needing Substitute"
+                                   style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #292940;" />
+                            <Button text="↻ Refresh" onAction="#onRefreshSubNeeded" styleClass="btn-secondary" />
+                            <TableView fx:id="subNeededTable" prefHeight="260" VBox.vgrow="ALWAYS" style="-fx-font-size: 12px;">
+                                <columns>
+                                    <TableColumn fx:id="subColId" text="ID" prefWidth="50" />
+                                    <TableColumn fx:id="subColTeacher" text="Teacher" prefWidth="130" />
+                                    <TableColumn fx:id="subColCourse" text="Course" prefWidth="130" />
+                                    <TableColumn fx:id="subColDay" text="Day" prefWidth="80" />
+                                    <TableColumn fx:id="subColTime" text="Time" prefWidth="100" />
+                                    <TableColumn fx:id="subColStatus" text="Status" prefWidth="80" />
+                                </columns>
+                            </TableView>
+                        </VBox>
+
+                        <VBox spacing="14" HBox.hgrow="ALWAYS" prefWidth="420"
+                              style="-fx-background-color: linear-gradient(to bottom, #FEF7EC, #FFFCF8);
+                                     -fx-background-radius: 16;
+                                     -fx-border-color: #EEAC5C; -fx-border-radius: 16; -fx-border-width: 2;
+                                     -fx-padding: 18;">
+                            <Label text="Propose Substitute"
+                                   style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #92400E;" />
+                            <Label fx:id="subSelectedLabel" text="(Select a session from the left table)"
+                                   style="-fx-font-size: 13px; -fx-text-fill: #6B7280; -fx-font-style: italic;" />
+
+                            <Button text="Find Available Substitutes" onAction="#onFindSubstitutesClicked" styleClass="btn-primary" />
+
+                            <VBox spacing="6">
+                                <Label text="Available Teachers:" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6B7280;" />
+                                <ComboBox fx:id="subAvailableTeachersCombo" promptText="No search yet" prefWidth="360" styleClass="form-field" />
+                            </VBox>
+
+                            <VBox spacing="6">
+                                <Label text="Reason:" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6B7280;" />
+                                <TextField fx:id="subReasonField" promptText="Reason for substitute request" styleClass="form-field" />
+                            </VBox>
+
+                            <Button text="Send Substitute Request" onAction="#onSendSubstituteRequest" maxWidth="Infinity"
+                                    style="-fx-background-color: #FF3B30; -fx-text-fill: white;
+                                           -fx-font-weight: bold; -fx-background-radius: 12;
+                                           -fx-padding: 12 0 12 0; -fx-cursor: hand;" />
+
+                            <Separator style="-fx-background-color: #E2E6EE;" />
+
+                            <Label text="All Substitute Requests (History)"
+                                   style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #92400E;" />
+                            <TableView fx:id="subHistoryTable" prefHeight="140" VBox.vgrow="ALWAYS" style="-fx-font-size: 11px;">
+                                <columns>
+                                    <TableColumn fx:id="subHColId" text="Sub ID" prefWidth="80" />
+                                    <TableColumn fx:id="subHColOrig" text="Original" prefWidth="100" />
+                                    <TableColumn fx:id="subHColSub" text="Substitute" prefWidth="100" />
+                                    <TableColumn fx:id="subHColStatus" text="Status" prefWidth="80" />
+                                </columns>
+                            </TableView>
+                        </VBox>
+                    </HBox>
+                    </ScrollPane>
+                </Tab>
+
+                <!-- ====== TAB 7: Room Swap Requests ====== -->
+                <Tab text="🏫 Room Swap Requests">
+                    <VBox spacing="16" style="-fx-background-color: #FBFCFE;">
+                        <padding><Insets top="24" right="24" bottom="24" left="24" /></padding>
+
+                        <VBox spacing="6"
+                              style="-fx-background-color: linear-gradient(to right, #EEAC5C, #F5C77E);
+                                     -fx-background-radius: 16;
+                                     -fx-padding: 20;
+                                     -fx-effect: dropshadow(gaussian, rgba(238, 172, 92, 0.25), 16, 0.1, 0, 6);">
+                            <Label text="Room Swap Requests"
+                                   style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #FFFFFF;" />
+                            <Label text="Teachers have requested a room change. Review each request, then Approve or Reject."
+                                   wrapText="true"
+                                   style="-fx-font-size: 13px; -fx-text-fill: rgba(255,255,255,0.9);" />
+                        </VBox>
+
+                        <VBox spacing="10" VBox.vgrow="ALWAYS"
+                              style="-fx-background-color: #FFFFFF; -fx-background-radius: 16;
+                                     -fx-border-color: #E2E6EE; -fx-border-radius: 16;
+                                     -fx-padding: 18;
+                                     -fx-effect: dropshadow(gaussian, rgba(41, 41, 64, 0.08), 16, 0.1, 0, 4);">
+                            <Label text="PENDING SWAP REQUESTS"
+                                   style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #EEAC5C;" />
+                            <TableView fx:id="swapRequestsTable" VBox.vgrow="ALWAYS" style="-fx-font-size: 13px;">
+                                <columns>
+                                    <TableColumn fx:id="swapColId" text="Request ID" prefWidth="120" />
+                                    <TableColumn fx:id="swapColSession" text="Session" prefWidth="160" />
+                                    <TableColumn fx:id="swapColCourse" text="Course" prefWidth="180" />
+                                    <TableColumn fx:id="swapColDay" text="Day / Time" prefWidth="150" />
+                                    <TableColumn fx:id="swapColCapacity" text="Min Capacity" prefWidth="100" />
+                                    <TableColumn fx:id="swapColReason" text="Reason" prefWidth="220" />
+                                    <TableColumn fx:id="swapColStatus" text="Status" prefWidth="90" />
+                                </columns>
+                            </TableView>
+                        </VBox>
+
+                        <HBox spacing="14" alignment="CENTER_LEFT">
+                            <VBox spacing="6">
+                                <Label text="Assign Room:" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6B7280;" />
+                                <ComboBox fx:id="swapRoomPickerCombo" promptText="Select a request first" prefWidth="300" styleClass="form-field" />
+                            </VBox>
+                            <Button text="✓  Approve" onAction="#onApproveSwapRequest" styleClass="btn-success" style="-fx-padding: 12 32 12 32;" />
+                            <Button text="✗  Reject" onAction="#onRejectSwapRequest"
+                                    style="-fx-background-color: #FF3B30; -fx-text-fill: white;
+                                           -fx-font-weight: bold; -fx-background-radius: 12;
+                                           -fx-padding: 12 32 12 32; -fx-font-size: 14px; -fx-cursor: hand;" />
+                            <Button text="↻  Refresh" onAction="#onRefreshSwapRequests" styleClass="btn-secondary" />
+                            <Label fx:id="swapRequestStatusLabel" text="" wrapText="true"
+                                   style="-fx-font-size: 13px; -fx-text-fill: #6B7280; -fx-font-weight: 600;" />
+                        </HBox>
+                    </VBox>
+                </Tab>
+
+            </TabPane>
+        </VBox>
+    </center>
+</BorderPane>

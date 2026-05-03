@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.Circle?>
+
+<!--
+    ============================================================
+     SAPCIS - Admin Navigation Hub
+     Modern Light Theme with Course Dashboard Style
+     Color Palette: Hadfield Blue, Valhalla, Wash Me
+     Controller: ui.AdminNavHubController
+    ============================================================
+-->
+<StackPane alignment="CENTER" styleClass="nav-root"
+           xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="ui.AdminNavHubController"
+           stylesheets="@styles.css"
+           style="-fx-background-color: linear-gradient(to bottom right, #FBFCFE, #F1F3F7);">
+
+    <VBox alignment="CENTER" spacing="16" maxWidth="480">
+        <padding><Insets top="40" right="40" bottom="40" left="40"/></padding>
+
+        <!-- Header Card -->
+        <VBox alignment="CENTER" spacing="10"
+              style="-fx-background-color: linear-gradient(to right, #292940, #3D3D5C);
+                     -fx-background-radius: 20;
+                     -fx-padding: 28;
+                     -fx-effect: dropshadow(gaussian, rgba(41, 41, 64, 0.25), 20, 0.1, 0, 6);">
+            <HBox alignment="CENTER" spacing="10">
+                <Circle radius="8" style="-fx-fill: #1572FE;" />
+                <Label text="SAPCIS"
+                       style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #FFFFFF;" />
+            </HBox>
+            <Label text="⚙ Admin Dashboard"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #FFFFFF;" />
+            <Label text="Manage academic operations"
+                   style="-fx-font-size: 13px; -fx-text-fill: rgba(255,255,255,0.7);" />
+        </VBox>
+
+        <!-- Teacher Tools Section -->
+        <VBox spacing="10"
+              style="-fx-background-color: #FFFFFF;
+                     -fx-background-radius: 16;
+                     -fx-padding: 20;
+                     -fx-effect: dropshadow(gaussian, rgba(41, 41, 64, 0.08), 16, 0.1, 0, 4);">
+            <Label text="TEACHER TOOLS"
+                   style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6B7280;" />
+            <Button text="📋  Teacher Dashboard (UC-01)" onAction="#openTeacherDashboard"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: #F8FAFC; -fx-text-fill: #292940;
+                           -fx-font-size: 14px; -fx-background-radius: 12;
+                           -fx-border-color: #E2E6EE; -fx-border-radius: 12; -fx-border-width: 1.5;
+                           -fx-padding: 14 20 14 20; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;" />
+            <Button text="🏫  Room Swap Request (UC-02)" onAction="#openRoomSwap"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: #F8FAFC; -fx-text-fill: #292940;
+                           -fx-font-size: 14px; -fx-background-radius: 12;
+                           -fx-border-color: #E2E6EE; -fx-border-radius: 12; -fx-border-width: 1.5;
+                           -fx-padding: 14 20 14 20; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;" />
+        </VBox>
+
+        <!-- Admin Tools Section -->
+        <VBox spacing="10"
+              style="-fx-background-color: #FFFFFF;
+                     -fx-background-radius: 16;
+                     -fx-padding: 20;
+                     -fx-effect: dropshadow(gaussian, rgba(41, 41, 64, 0.08), 16, 0.1, 0, 4);">
+            <Label text="ADMIN TOOLS"
+                   style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6B7280;" />
+            <Button text="👨‍🏫  Substitute Assignment (UC-08)" onAction="#openSubstitute"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: linear-gradient(to right, #C08CEE, #D4A8F5); -fx-text-fill: #FFFFFF;
+                           -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 12;
+                           -fx-padding: 14 20 14 20; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;" />
+            <Button text="📅  Schedule Clash Resolution (UC-09)" onAction="#openSchedule"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: #F8FAFC; -fx-text-fill: #292940;
+                           -fx-font-size: 14px; -fx-background-radius: 12;
+                           -fx-border-color: #E2E6EE; -fx-border-radius: 12; -fx-border-width: 1.5;
+                           -fx-padding: 14 20 14 20; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;" />
+            <Button text="📏  Campus Rules Config (UC-10)" onAction="#openRules"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: #F8FAFC; -fx-text-fill: #292940;
+                           -fx-font-size: 14px; -fx-background-radius: 12;
+                           -fx-border-color: #E2E6EE; -fx-border-radius: 12; -fx-border-width: 1.5;
+                           -fx-padding: 14 20 14 20; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;" />
+            <Button text="⚠  Emergency Override (UC-11)" onAction="#openOverride"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: linear-gradient(to right, #EEAC5C, #F5C77E); -fx-text-fill: #FFFFFF;
+                           -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 12;
+                           -fx-padding: 14 20 14 20; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;" />
+            <Button text="📊  Analytics &amp; Reports (UC-12)" onAction="#openReport"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: linear-gradient(to right, #1572FE, #4A94FF); -fx-text-fill: #FFFFFF;
+                           -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 12;
+                           -fx-padding: 14 20 14 20; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;" />
+        </VBox>
+
+        <!-- Logout Button -->
+        <Button text="🚪 Logout" onAction="#logout"
+                maxWidth="Infinity"
+                style="-fx-background-color: #FF3B30; -fx-text-fill: #FFFFFF;
+                       -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 12;
+                       -fx-padding: 14 20 14 20; -fx-cursor: hand;" />
+    </VBox>
+</StackPane>

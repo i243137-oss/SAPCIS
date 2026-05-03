@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane alignment="CENTER" styleClass="uc-root"
+           xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="ui.AdminSubstituteUIController"
+           stylesheets="@styles.css">
+
+    <VBox alignment="CENTER" spacing="14" styleClass="uc-card" maxWidth="460">
+        <Label text="👨‍🏫 Substitute Teacher Assignment" styleClass="uc-title"/>
+        <Label text="Assign or handle declined substitutes" styleClass="app-subtitle"/>
+        <Separator/>
+
+        <VBox spacing="4">
+            <Label text="SESSION ID" styleClass="form-label"/>
+            <TextField fx:id="sessionIdField" styleClass="form-field"/>
+        </VBox>
+        <HBox spacing="12">
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <Label text="ORIGINAL TEACHER ID" styleClass="form-label"/>
+                <TextField fx:id="originalTeacherIdField" styleClass="form-field"/>
+            </VBox>
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <Label text="SUBSTITUTE TEACHER ID" styleClass="form-label"/>
+                <TextField fx:id="substituteTeacherIdField" styleClass="form-field"/>
+            </VBox>
+        </HBox>
+        <VBox spacing="4">
+            <Label text="DECLINE REASON (IF DECLINING)" styleClass="form-label"/>
+            <TextField fx:id="reasonField" promptText="Optional reason" styleClass="form-field"/>
+        </VBox>
+
+        <HBox spacing="12">
+            <Button text="Assign Teacher" onAction="#onAssignClicked" styleClass="btn-success" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+            <Button text="Substitute Declined" onAction="#onDeclineReceived" styleClass="btn-secondary" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+        </HBox>
+        <Label fx:id="declineAlert" styleClass="message-error" wrapText="true"/>
+    </VBox>
+</StackPane>

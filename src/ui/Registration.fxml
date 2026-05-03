@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane alignment="CENTER" styleClass="login-root"
+           xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="ui.RegistrationUIController"
+           stylesheets="@styles.css">
+
+    <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+        <StackPane alignment="CENTER">
+            <padding><Insets top="30" bottom="30"/></padding>
+            <VBox alignment="CENTER" spacing="16" styleClass="login-card">
+
+                <!-- Header -->
+                <Label text="📝 Student Registration" styleClass="app-title"/>
+                <Label text="Only students can register. Teachers &amp; Admins log in only." styleClass="app-subtitle"/>
+
+                <Separator/>
+
+                <!-- Full Name -->
+                <VBox spacing="4">
+                    <Label text="FULL NAME *" styleClass="form-label"/>
+                    <TextField fx:id="nameField" promptText="e.g. Ahmed Khan" styleClass="form-field"/>
+                </VBox>
+
+                <!-- Email -->
+                <VBox spacing="4">
+                    <Label text="EMAIL *" styleClass="form-label"/>
+                    <TextField fx:id="emailField" promptText="e.g. ahmed@uni.edu" styleClass="form-field"/>
+                </VBox>
+
+                <!-- Password -->
+                <VBox spacing="4">
+                    <Label text="PASSWORD *" styleClass="form-label"/>
+                    <PasswordField fx:id="passwordField" promptText="Min 6 characters" styleClass="form-field"/>
+                </VBox>
+
+                <Separator/>
+
+                <!-- Two columns: Roll No and Batch -->
+                <HBox spacing="12">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="ROLL NO *" styleClass="form-label"/>
+                        <TextField fx:id="rollNoField" promptText="e.g. FA21-BCS-001" styleClass="form-field"/>
+                    </VBox>
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="BATCH" styleClass="form-label"/>
+                        <ComboBox fx:id="batchComboBox" promptText="Select Batch" styleClass="combo-box" maxWidth="Infinity"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Two columns: Dept and Section -->
+                <HBox spacing="12">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="DEPARTMENT" styleClass="form-label"/>
+                        <ComboBox fx:id="deptComboBox" promptText="Select Dept" styleClass="combo-box" maxWidth="Infinity"/>
+                    </VBox>
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="SECTION *" styleClass="form-label"/>
+                        <ComboBox fx:id="sectionComboBox" promptText="Select Section" styleClass="combo-box" maxWidth="Infinity"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Buttons -->
+                <VBox spacing="10" alignment="CENTER">
+                    <Button text="Create Account &amp; Auto-Enroll" onAction="#handleRegistration" styleClass="btn-success" maxWidth="Infinity"/>
+                    <Button text="← Back to Login" onAction="#backToLogin" styleClass="btn-secondary" maxWidth="Infinity"/>
+                </VBox>
+
+                <!-- Message -->
+                <Label fx:id="messageLabel" styleClass="message-info" wrapText="true"/>
+            </VBox>
+        </StackPane>
+    </ScrollPane>
+</StackPane>

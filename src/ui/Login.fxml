@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+
+<!--
+    ============================================================
+     SAPCIS - Login Screen
+     Modern Light Theme with Course Dashboard Style
+     Color Palette: Hadfield Blue, Valhalla, Wash Me
+     Controller: ui.AuthUIController
+    ============================================================
+-->
+<StackPane xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="ui.AuthUIController"
+           alignment="CENTER"
+           prefWidth="900.0"
+           prefHeight="650.0"
+           styleClass="login-root"
+           stylesheets="@styles.css">
+
+    <!-- Login Card -->
+    <VBox alignment="CENTER"
+          maxWidth="440.0"
+          spacing="20.0"
+          styleClass="login-card">
+
+        <!-- Logo / Brand -->
+        <HBox alignment="CENTER" spacing="10">
+            <Circle radius="8" style="-fx-fill: #1572FE;" />
+            <Label text="SAPCIS" styleClass="login-logo" />
+        </HBox>
+
+        <Region prefHeight="4.0" />
+
+        <!-- Header -->
+        <VBox alignment="CENTER" spacing="6">
+            <Label text="Welcome Back!" styleClass="login-title" />
+            <Label text="Sign in to continue to your dashboard" styleClass="login-subtitle" />
+        </VBox>
+
+        <Region prefHeight="8.0" />
+
+        <!-- Email Field -->
+        <VBox spacing="8.0" maxWidth="340">
+            <Label text="Email" styleClass="form-label" />
+            <TextField fx:id="emailField"
+                       promptText="you@university.edu"
+                       styleClass="form-field"
+                       prefHeight="48" />
+        </VBox>
+
+        <!-- Password Field -->
+        <VBox spacing="8.0" maxWidth="340">
+            <Label text="Password" styleClass="form-label" />
+            <PasswordField fx:id="passwordField"
+                           promptText="Enter your password"
+                           styleClass="form-field"
+                           prefHeight="48" />
+        </VBox>
+
+        <Region prefHeight="4.0" />
+
+        <!-- Login Button -->
+        <Button fx:id="loginButton"
+                text="Sign In"
+                onAction="#onLoginClicked"
+                prefWidth="340"
+                prefHeight="50"
+                styleClass="btn-primary" />
+
+        <!-- Status / Error Message -->
+        <Label fx:id="loginMessageLabel"
+               wrapText="true"
+               maxWidth="340"
+               styleClass="message-error" />
+
+        <Region prefHeight="4.0" />
+
+        <!-- Footer link -->
+        <HBox alignment="CENTER" spacing="6.0">
+            <Label text="Don't have an account?"
+                   styleClass="login-subtitle" />
+            <Hyperlink fx:id="signupLink"
+                       text="Create Account"
+                       onAction="#onGoToSignupClicked"
+                       styleClass="link-text" />
+        </HBox>
+    </VBox>
+</StackPane>

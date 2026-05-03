@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane alignment="CENTER" styleClass="uc-root"
+           xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="ui.AdminScheduleUIController"
+           stylesheets="@styles.css">
+
+    <VBox alignment="CENTER" spacing="14" styleClass="uc-card" maxWidth="460">
+        <Label text="📅 Resolve Schedule Clash" styleClass="uc-title"/>
+        <Label text="Reassign classes to resolve timetable conflicts" styleClass="app-subtitle"/>
+        <Separator/>
+
+        <VBox spacing="4">
+            <Label text="SELECTED CLASS" styleClass="form-label"/>
+            <TextField fx:id="selectedClassField" promptText="e.g. CS101-A" styleClass="form-field"/>
+        </VBox>
+        <HBox spacing="12">
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <Label text="NEW ROOM ID" styleClass="form-label"/>
+                <TextField fx:id="newRoomIdField" styleClass="form-field"/>
+            </VBox>
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <Label text="TIMETABLE SLOT" styleClass="form-label"/>
+                <TextField fx:id="timetableSlotField" promptText="e.g. Mon 9AM" styleClass="form-field"/>
+            </VBox>
+        </HBox>
+
+        <Button text="Reassign Class" onAction="#onReassignClicked" styleClass="btn-primary" maxWidth="Infinity"/>
+        <Label fx:id="errorLabel" styleClass="message-error" wrapText="true"/>
+    </VBox>
+</StackPane>
