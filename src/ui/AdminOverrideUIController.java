@@ -27,11 +27,11 @@ public class AdminOverrideUIController {
 
         try {
             if ("OVERRIDE_STATUS".equals(adminAction)) {
-                String sessionId = sessionIdField.getText();
+                int assignmentId = Integer.parseInt(sessionIdField.getText());
                 String newStatus = newStatusField.getText();
                 String emergencyReason = emergencyReasonField.getText();
-                
-                overrideController.overrideStatus(sessionId, newStatus, emergencyReason);
+
+                overrideController.overrideStatus(assignmentId, newStatus, emergencyReason);
                 overrideController.confirmOverrideAndNotifyParties();
                 statusLabel.setText("Status overridden successfully.");
             } else if ("INITIATE_ROOM_MOVE".equals(adminAction)) {
