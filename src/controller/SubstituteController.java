@@ -69,11 +69,11 @@ public class SubstituteController {
 
         try (Connection c = DBConnection.getConnection();
              PreparedStatement s = c.prepareStatement(sql)) {
-            s.setString(1, courseCode);          // for qualification check
-            s.setString(2, excludeTeacherUid);   // not the original teacher
-            s.setString(3, dayOfWeek);           // overlap check day
-            s.setString(4, endTime + ":00");     // overlap: existing.start < new.end
-            s.setString(5, startTime + ":00");   // overlap: existing.end > new.start
+            s.setString(1, courseCode);
+            s.setString(2, excludeTeacherUid);
+            s.setString(3, dayOfWeek);
+            s.setString(4, endTime + ":00");
+            s.setString(5, startTime + ":00");
             try (ResultSet rs = s.executeQuery()) {
                 while (rs.next()) {
                     Map<String, String> row = new LinkedHashMap<>();
@@ -89,12 +89,6 @@ public class SubstituteController {
         return teachers;
     }
 
-    /**
-     * Admin proposes a substitute teacher → creates a PENDING record.
-     * GRASP Creator pattern: SubstituteController creates the assignment record.
-     *
-     * @return the generated substituteId
-     */
     public String proposeSubstitute(int assignmentId, String originalTeacherUid,
                                      String substituteTeacherUid, String reason) throws SQLException {
         String subId = "SUB-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
@@ -115,32 +109,17 @@ public class SubstituteController {
         return subId;
     }
 
-    /**
-     * Teacher accepts a substitute request.
-     * Updates status to ACCEPTED and optionally updates the class_sessions
-     * to reflect the temporary teacher change.
-     */
     public void acceptSubstitute(String substituteId) throws SQLException {
         try (Connection c = DBConnection.getConnection()) {
-            // 1. Update substitute_assignments status
             try (PreparedStatement s = c.prepareStatement(
                     "UPDATE substitute_assignments SET status = 'ACCEPTED', respondedAt = GETDATE() "
                   + "WHERE substituteId = ?")) {
                 s.setString(1, substituteId);
                 s.executeUpdate();
             }
-
-            // 2. Get assignment details to update class_sessions if needed
-            // (The substitute is now handling this session)
-            // This is informational — the actual timetable still shows original teacher
-            // but class_sessions can track the substitute via a note or separate column.
         }
     }
 
-    /**
-     * Teacher rejects a substitute request.
-     * The Admin can then see the rejection and reopen the search.
-     */
     public void rejectSubstitute(String substituteId) throws SQLException {
         try (Connection c = DBConnection.getConnection();
              PreparedStatement s = c.prepareStatement(
@@ -152,9 +131,21 @@ public class SubstituteController {
     }
 
     /**
-     * Gets all pending substitute requests (for Admin view — shows sessions
-     * where teachers requested a sub or where status updates indicate need).
+     * Rejects the latest pending substitute request for a specific teacher.
+     * Used when the teacher declines a substitute assignment.
      */
+    public void rejectSubstituteByTeacher(String teacherId, String reason)
+            throws SQLException {
+        try (Connection c = DBConnection.getConnection();
+             PreparedStatement s = c.prepareStatement(
+                     "UPDATE TOP (1) substitute_assignments "
+                   + "SET status = 'REJECTED', respondedAt = GETDATE() "
+                   + "WHERE substituteTeacherUid = ? AND status = 'PENDING'")) {
+            s.setString(1, teacherId);
+            s.executeUpdate();
+        }
+    }
+
     public List<Map<String, String>> getAllSubstituteRequests() throws SQLException {
         List<Map<String, String>> rows = new ArrayList<>();
         String sql =
@@ -188,17 +179,8 @@ public class SubstituteController {
         return rows;
     }
 
-    /**
-     * Gets sessions that need a substitute:
-     * teacher_assignments whose class_sessions status = 'CANCELLED' or 'DELAYED',
-     * AND don't yet have an ACCEPTED substitute.
-     */
     public List<Map<String, String>> getSessionsNeedingSub() throws SQLException {
         List<Map<String, String>> rows = new ArrayList<>();
-        // Shows sessions needing a substitute from TWO sources:
-        // 1. Sessions whose class_sessions status = CANCELLED or DELAYED
-        // 2. Sessions where the teacher explicitly requested a substitute (REQUESTED_BY_TEACHER)
-        // Excludes sessions that already have an ACCEPTED substitute.
         String sql =
             "SELECT DISTINCT ta.assignmentId, ta.teacherUid, u.name AS teacherName, "
           + "       ta.courseCode, c.courseName, ta.dayOfWeek, "
@@ -251,10 +233,6 @@ public class SubstituteController {
         return rows;
     }
 
-    /**
-     * Returns all teacher_assignments for a given teacher (for the "My Sessions" table).
-     * Used by the teacher to pick which session they need a substitute for.
-     */
     public List<Map<String, String>> getMyAssignments(String teacherUid) throws SQLException {
         List<Map<String, String>> rows = new ArrayList<>();
         String sql =
@@ -289,14 +267,6 @@ public class SubstituteController {
         return rows;
     }
 
-    /**
-     * Teacher requests a substitute for one of their own sessions.
-     * Creates a PENDING record with originalTeacherUid = substituteTeacherUid = teacherUid
-     * (placeholder — admin will assign the actual substitute later).
-     * Status is set to 'REQUESTED_BY_TEACHER' so admin can distinguish it.
-     *
-     * @return the generated substituteId
-     */
     public String requestSubstituteForSelf(int assignmentId, String teacherUid,
                                             String reason) throws SQLException {
         String subId = "SUB-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
@@ -310,16 +280,13 @@ public class SubstituteController {
             s.setString(1, subId);
             s.setInt(2, assignmentId);
             s.setString(3, teacherUid);
-            s.setString(4, teacherUid);   // placeholder — admin will assign actual sub
+            s.setString(4, teacherUid);
             s.setString(5, reason);
             s.executeUpdate();
         }
         return subId;
     }
 
-    /**
-     * Gets pending substitute requests for a specific teacher (their inbox).
-     */
     public List<Map<String, String>> getPendingRequestsForTeacher(String teacherUid) throws SQLException {
         List<Map<String, String>> rows = new ArrayList<>();
         String sql =
@@ -354,9 +321,6 @@ public class SubstituteController {
         return rows;
     }
 
-    /**
-     * Assigns a substitute teacher for an original teacher (used by AdminSubstituteUIController).
-     */
     public void assignTeacher(String originalTeacherId, String substituteTeacherId) throws SQLException {
         try (Connection c = DBConnection.getConnection();
              PreparedStatement s = c.prepareStatement(
@@ -372,9 +336,6 @@ public class SubstituteController {
         }
     }
 
-    /**
-     * Handles substitute response (accept or decline) from AdminSubstituteUIController.
-     */
     public void handleSubstituteResponse(String teacherId, String sessionId, boolean accepted, String reason) {
         try {
             if (accepted) {
@@ -393,9 +354,6 @@ public class SubstituteController {
         }
     }
 
-    /**
-     * Reopens substitute search upon decline.
-     */
     public void reopenSubstituteSearch() {
         System.out.println("[SubstituteController] Reopening search for substitute teachers.");
     }
