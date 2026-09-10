@@ -294,7 +294,8 @@ public class RoomSwapController {
     /**
      * Allows a teacher or admin to request a swap specifically for an explicit room ID.
      */
-    public String requestSpecificRoom(String classId, String roomId, String reason) throws SQLException {
+    public String requestSpecificRoom(String classId, String roomId, String reason)
+            throws SQLException, RoomUnavailableException {
         String fullReason = (reason != null ? reason : "") + " [Target Room: " + roomId + "]";
         return requestRoomSwap(classId, fullReason, 1);
     }
