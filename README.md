@@ -9,14 +9,9 @@
 [![JavaFX](https://img.shields.io/badge/JavaFX-17-blue?style=flat-square&logo=java&logoColor=white)](https://openjfx.io/)
 [![SQL Server](https://img.shields.io/badge/SQL%20Server-2019+-CC2927?style=flat-square&logo=microsoftsqlserver&logoColor=white)](https://www.microsoft.com/sql-server)
 [![JDBC](https://img.shields.io/badge/JDBC-mssql--jdbc%2013.4-green?style=flat-square)](https://learn.microsoft.com/sql/connect/jdbc/)
-[![License](https://img.shields.io/badge/License-Academic-purple?style=flat-square)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Active%20Development-brightgreen?style=flat-square)]()
 
 > **A full-stack desktop application** for managing university class schedules, teacher assignments, room swaps, emergency overrides, and student timetables — built with JavaFX and Microsoft SQL Server.
-
----
-
-[✨ Features](#-features) • [🏗️ Architecture](#️-architecture) • [🚀 Quick Start](#-quick-start) • [📸 Screenshots](#-screenshots) • [🗄️ Database](#️-database-setup) • [👥 User Roles](#-user-roles)
 
 </div>
 
@@ -24,103 +19,67 @@
 
 ## ✨ Features
 
-<table>
-<tr>
-<td width="50%">
-
 ### 👨‍💼 Admin
-- 🏫 **Campus Core Setup** — Departments, Batches, Courses, Rooms, Sections, Teachers
-- 📅 **Timetable Assignment** — Assign teachers to slots with full rule validation
-- 📏 **Policy Engine** — Max courses/day, rest gaps, opening/closing times
-- 🚨 **Emergency Override** — Change day/time, swap rooms, override status
-- 👨‍🏫 **Substitute Management** — Find & assign qualified substitutes
-- 🏫 **Room Swap Approval** — Review and approve/reject teacher requests
-- 📊 **Analytics & Reports** — Faculty load, classroom utilization, timetables
-
-</td>
-<td width="50%">
+- 🏫 Campus core setup — Departments, Batches, Courses, Rooms, Sections, Teachers
+- 📅 Timetable assignment with rule validation
+- 📏 Policy engine — max courses/day, rest gaps, opening/closing times
+- 🚨 Emergency overrides — change day/time, swap rooms, override status
+- 👨‍🏫 Substitute teacher management
+- 🏫 Room swap approval
+- 📊 Analytics and reports
 
 ### 👩‍🏫 Teacher
-- 📋 **Live Schedule** — Real-time ONGOING/UPCOMING status from system clock
-- ✏️ **Report Delays/Cancellations** — Notify students instantly
-- 🔄 **Request Room Swap** — Submit room change requests to admin
-- 🔔 **Notifications** — Receive schedule change alerts
+- 📋 Live schedule with ONGOING/UPCOMING status
+- ✏️ Report delays and cancellations
+- 🔄 Request room swaps
+- 🔔 Receive notifications
 
 ### 🎓 Student
-- 📆 **Weekly Timetable** — Full 5-day schedule with live status
-- 🔴 **Critical Alerts** — Cancelled/delayed class banners
-- 📱 **Day-by-Day View** — Filter by Monday–Saturday
-- 🔔 **Smart Alerts** — Subscribe to class notifications
-
-</td>
-</tr>
-</table>
+- 📆 Weekly timetable
+- 🔴 Critical class alerts
+- 📱 Day-by-day timetable view
+- 🔔 Class notifications
 
 ---
 
 ## 🏗️ Architecture
 
-```
+```text
 SAPCIS/
 ├── src/
-│   ├── Main.java                    # Application entry point
+│   ├── Main.java
 │   ├── controller/                  # GRASP Use-Case Controllers
-│   │   ├── DashboardController.java # UC-04: Student Dashboard
-│   │   ├── TeacherController.java   # UC-01: Teacher Dashboard
-│   │   ├── OverrideController.java  # UC-11: Emergency Override
-│   │   ├── RoomSwapController.java  # UC-02: Room Swap Request
-│   │   ├── SubstituteController.java# UC-08: Substitute Management
-│   │   ├── ScheduleController.java  # UC-03: Schedule Management
-│   │   └── ReportController.java    # UC-12: Analytics & Reports
+│   │   ├── DashboardController.java
+│   │   ├── TeacherController.java
+│   │   ├── OverrideController.java
+│   │   ├── RoomSwapController.java
+│   │   ├── SubstituteController.java
+│   │   ├── ScheduleController.java
+│   │   └── ReportController.java
 │   ├── model/                       # Domain Entities
-│   │   ├── Teacher.java
-│   │   ├── Student.java
-│   │   ├── Course.java
-│   │   ├── Schedule.java
-│   │   ├── ClassSession.java
-│   │   ├── Classroom.java
-│   │   ├── Section.java
-│   │   ├── Rule.java
-│   │   ├── Notification.java
-│   │   ├── SubstituteAssignment.java
-│   │   └── ScheduleAdjustmentRequest.java
-│   ├── service/                     # Pure Fabrication Services
-│   │   ├── NotificationService.java # GoF Observer Pattern
-│   │   ├── ConstraintResolverService.java
-│   │   └── DirectoryService.java
+│   ├── service/                     # Application Services
 │   ├── dao/                         # Data Access Objects
-│   │   ├── SessionRepository.java
-│   │   ├── ClassSessionDAO.java
-│   │   ├── RoomRepository.java
-│   │   ├── StudentDAO.java
-│   │   └── TimetableDBDAO.java
-│   ├── db/
-│   │   └── DBConnection.java        # SQL Server connection pool
+│   ├── db/DBConnection.java
 │   ├── ui/                          # JavaFX Controllers + FXML
-│   │   ├── AdminDashboardController.java
-│   │   ├── AdminDashboard.fxml
-│   │   ├── TeacherDashboard.fxml
-│   │   ├── StudentDashboard.fxml
-│   │   ├── Login.fxml
-│   │   ├── StudentSignup.fxml
-│   │   └── styles.css
 │   ├── exception/                   # Custom Exceptions
-│   └── utils/                       # Utilities (UserSession, etc.)
-├── lib/
-│   └── mssql-jdbc.jar               # Microsoft JDBC Driver
-├── sapcis_complete.sql              # Full database schema + seed data
+│   └── utils/                       # Utilities
+├── lib/mssql-jdbc.jar
+├── sapcis_complete.sql
+├── build.xml
+├── .github/workflows/
 └── README.md
 ```
 
 ### Design Patterns Used
+
 | Pattern | Where |
 |---------|-------|
-| **GRASP Controller** | All `controller/` classes |
-| **Information Expert** | `RoomRepository`, `StudentDAO` |
+| **GRASP Controller** | Use-case controller classes |
+| **Information Expert** | Repository and DAO classes |
 | **Creator** | `RoomSwapController.createRequest()` |
-| **Pure Fabrication** | `NotificationService`, `ConstraintResolverService` |
-| **GoF Observer** | `NotificationService.pushAlerts()` |
-| **GoF Strategy** | `ConstraintResolverService` rule evaluation |
+| **Pure Fabrication** | Application service classes |
+| **GoF Observer** | `NotificationService` |
+| **GoF Strategy** | Constraint/rule evaluation |
 
 ---
 
@@ -128,125 +87,97 @@ SAPCIS/
 
 ### Prerequisites
 
-| Tool | Version | Download |
-|------|---------|----------|
-| ☕ JDK | 17+ | [OpenJDK](https://adoptium.net/) |
-| 🗄️ SQL Server | 2019+ | [SQL Server Express](https://www.microsoft.com/sql-server/sql-server-downloads) |
-| 🖥️ SQL Server Management Studio | Any | [SSMS](https://learn.microsoft.com/sql/ssms/download-sql-server-management-studio-ssms) |
-| 📦 JavaFX SDK | 17+ | [OpenJFX](https://gluonhq.com/products/javafx/) |
+| Tool | Version |
+|------|---------|
+| ☕ JDK | 17+ |
+| 🖥️ JavaFX | 17+ |
+| 🗄️ SQL Server | 2019+ |
+| 🛠️ SQL Server Management Studio | Any recent version |
 
----
-
-### Step 1 — Clone the Repository
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/SAPCIS.git
+git clone https://github.com/i243137-oss/SAPCIS.git
 cd SAPCIS
 ```
 
----
+### 2. Set Up the Database
 
-### Step 2 — Database Setup
+Open SQL Server Management Studio and run:
 
-1. **Open SQL Server Management Studio (SSMS)**
+```sql
+USE master;
+GO
+CREATE DATABASE sapcis_db;
+GO
+USE sapcis_db;
+GO
+```
 
-2. **Create the database and run the schema:**
-   ```sql
-   -- In SSMS, open a new query window and run:
-   USE master;
-   GO
-   CREATE DATABASE sapcis_db;
-   GO
-   USE sapcis_db;
-   GO
-   ```
+Then open `sapcis_complete.sql` and execute the complete script. It creates the required tables and seed data.
 
-3. **Run the complete SQL script:**
-   - Open `sapcis_complete.sql` in SSMS
-   - Execute it (`F5` or click **Execute**)
-   - This creates all tables + seeds demo data
+Verify the setup:
 
-4. **Verify tables were created:**
-   ```sql
-   USE sapcis_db;
-   SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES ORDER BY TABLE_NAME;
-   ```
+```sql
+USE sapcis_db;
+SELECT TABLE_NAME
+FROM INFORMATION_SCHEMA.TABLES
+ORDER BY TABLE_NAME;
+```
 
----
+### 3. Configure the Database Connection
 
-### Step 3 — Configure Database Connection
+For local development, update `src/db/DBConnection.java` with your SQL Server configuration.
 
-Edit `src/db/DBConnection.java` and update the connection string:
+Windows Authentication example:
 
 ```java
-// Option A: Windows Authentication (recommended for local dev)
 private static final String URL =
     "jdbc:sqlserver://localhost:1433;databaseName=sapcis_db;" +
     "integratedSecurity=true;trustServerCertificate=true;";
+```
 
-// Option B: SQL Server Authentication
+SQL Server Authentication example:
+
+```java
 private static final String URL =
     "jdbc:sqlserver://localhost:1433;databaseName=sapcis_db;" +
     "user=YOUR_USERNAME;password=YOUR_PASSWORD;trustServerCertificate=true;";
 ```
 
-> 💡 **Tip:** If SQL Server is on a named instance (e.g. `SQLEXPRESS`), use:
-> `localhost\\SQLEXPRESS:1433` instead of `localhost:1433`
+> **Important:** Do not commit real database credentials. Use local configuration or environment-specific settings.
+
+### 4. Configure JavaFX
+
+Add the JavaFX SDK libraries to your IDE and provide the required module path.
+
+Example VM arguments:
+
+```text
+--module-path "C:\path\to\javafx-sdk-17\lib" --add-modules javafx.controls,javafx.fxml
+```
+
+For VS Code, configure the same module path in `.vscode/launch.json`.
+
+### 5. Build and Run
+
+SAPCIS is a JavaFX desktop application. You can run `src/Main.java` from a configured IDE, or use the included Ant build configuration where appropriate.
+
+If using command-line compilation, make sure JavaFX and `lib/mssql-jdbc.jar` are available on the module/class path.
 
 ---
 
-### Step 4 — Add JavaFX to Your IDE
+## 🔧 Build & CI Notes
 
-#### 🔵 IntelliJ IDEA
-1. **File → Project Structure → Libraries → + → Java**
-2. Navigate to your JavaFX SDK `lib/` folder and add all JARs
-3. **Run → Edit Configurations → VM Options:**
-   ```
-   --module-path "C:\path\to\javafx-sdk-17\lib" --add-modules javafx.controls,javafx.fxml
-   ```
+The repository includes a GitHub Actions build workflow for checking the Java source code.
 
-#### 🟠 Eclipse
-1. **Project → Properties → Java Build Path → Libraries → Add External JARs**
-2. Add all JARs from JavaFX SDK `lib/`
-3. **Run Configurations → Arguments → VM Arguments:**
-   ```
-   --module-path "C:\path\to\javafx-sdk-17\lib" --add-modules javafx.controls,javafx.fxml
-   ```
+Recent build fixes include:
 
-#### 🟢 VS Code
-Add to `.vscode/launch.json`:
-```json
-{
-    "type": "java",
-    "name": "SAPCIS",
-    "request": "launch",
-    "mainClass": "Main",
-    "vmArgs": "--module-path \"C:/path/to/javafx-sdk-17/lib\" --add-modules javafx.controls,javafx.fxml"
-}
-```
+- `RoomSwapController.requestSpecificRoom()` now declares the checked `RoomUnavailableException` it can propagate.
+- `SubstituteController` now provides `rejectSubstituteByTeacher(String, String)` for teacher rejection handling.
+- `AdminOverrideUIController` now converts the session/assignment ID from the UI text field to the integer expected by `OverrideController`.
 
----
-
-### Step 5 — Build & Run
-
-#### Using Command Line
-```bash
-# Compile
-javac --module-path /path/to/javafx-sdk/lib \
-      --add-modules javafx.controls,javafx.fxml \
-      -cp "lib/mssql-jdbc.jar" \
-      -d bin \
-      src/**/*.java
-
-# Run
-java --module-path /path/to/javafx-sdk/lib \
-     --add-modules javafx.controls,javafx.fxml \
-     -cp "bin:lib/mssql-jdbc.jar" \
-     Main
-```
-
-#### Using Your IDE
-Simply run `src/Main.java` as the main class.
+The `db.properties` warning in CI is separate from these Java compilation errors. The repository provides `db.properties.example`; CI/database credentials should be configured separately rather than committed to the repository.
 
 ---
 
@@ -258,13 +189,13 @@ Simply run `src/Main.java` as the main class.
 | 👩‍🏫 **Teacher** | `T-SE-001` | `teacher123` |
 | 🎓 **Student** | `STU-001` | `student123` |
 
-> ⚠️ Change these credentials after first login in a production environment.
+> ⚠️ These are demo credentials for academic/local development only. Change or remove them before production deployment.
 
 ---
 
 ## 👥 User Roles
 
-```
+```text
 ┌─────────────────────────────────────────────────────────┐
 │                        SAPCIS                           │
 ├──────────────┬──────────────────┬───────────────────────┤
@@ -281,87 +212,71 @@ Simply run `src/Main.java` as the main class.
 
 ---
 
-## 🗄️ Database Setup
+## 🗄️ Database
 
 ### Key Tables
 
 | Table | Description |
 |-------|-------------|
-| `users` | All users (Admin, Teacher, Student) with roles |
-| `teacher_assignments` | **Source of truth** for all timetable slots |
-| `class_sessions` | Live session status (ONGOING/CANCELLED/DELAYED) |
-| `schedule_adjustment_requests` | Room swap requests from teachers |
+| `users` | All users and roles |
+| `teacher_assignments` | Source of truth for timetable slots |
+| `class_sessions` | Live session status |
+| `schedule_adjustment_requests` | Room swap requests |
 | `substitute_assignments` | Substitute teacher records |
-| `rules` | Campus policy rules (max courses, rest gap, etc.) |
-| `notifications` | System notifications for all users |
-| `classrooms` | Room details with capacity |
+| `rules` | Campus policy rules |
+| `notifications` | User notifications |
+| `classrooms` | Classroom details and capacity |
 | `courses` | Course catalog |
-| `sections` | Batch + Department + Section mappings |
+| `sections` | Batch, department and section mappings |
 | `departments` | Department registry |
 | `batches` | Academic batch/year registry |
 
 ### Live Status Logic
-```
-Status is computed dynamically from the system clock:
 
-  IF class is CANCELLED or DELAYED (manually set)
-      → Show that status (sticky override)
-  ELSE IF today == class day AND now >= startTime AND now < endTime
-      → ONGOING  🟢
-  ELSE
-      → UPCOMING  🔵
+```text
+IF class is CANCELLED or DELAYED
+    → Show the manually assigned status
+ELSE IF today == class day AND now >= startTime AND now < endTime
+    → ONGOING
+ELSE
+    → UPCOMING
 ```
 
 ---
 
 ## 🔧 Troubleshooting
 
-<details>
-<summary><b>❌ "Cannot connect to SQL Server"</b></summary>
+### Cannot connect to SQL Server
 
-1. Ensure SQL Server service is running:
-   - Open **Services** → Find **SQL Server (MSSQLSERVER)** → Start
-2. Enable TCP/IP in **SQL Server Configuration Manager**
-3. Check firewall allows port `1433`
-4. Verify `trustServerCertificate=true` in connection string
+1. Ensure the SQL Server service is running.
+2. Enable TCP/IP in SQL Server Configuration Manager.
+3. Check that the configured port is accessible.
+4. Verify the database name and connection string.
+5. For local development, use `trustServerCertificate=true` when appropriate.
 
-</details>
+### JavaFX runtime components are missing
 
-<details>
-<summary><b>❌ "JavaFX runtime components are missing"</b></summary>
+Add the JavaFX module path and modules to your run configuration:
 
-Add VM arguments to your run configuration:
-```
+```text
 --module-path "C:\path\to\javafx-sdk-17\lib" --add-modules javafx.controls,javafx.fxml
 ```
 
-</details>
+### SQLServerDriver class not found
 
-<details>
-<summary><b>❌ "Class not found: com.microsoft.sqlserver.jdbc.SQLServerDriver"</b></summary>
+Ensure `lib/mssql-jdbc.jar` is included in the classpath.
 
-Ensure `lib/mssql-jdbc.jar` is on the classpath. In IntelliJ:
-- **File → Project Structure → Modules → Dependencies → + → JARs**
-- Add `lib/mssql-jdbc.jar`
+### Schedule shows no data
 
-</details>
+Run the seed data script and verify:
 
-<details>
-<summary><b>❌ Schedule shows no data for student/teacher</b></summary>
-
-Run the seed data script:
 ```sql
 USE sapcis_db;
--- Check teacher_assignments has data:
 SELECT COUNT(*) FROM teacher_assignments;
--- Check students table:
 SELECT * FROM students;
--- Verify section names match:
 SELECT DISTINCT sectionName FROM teacher_assignments;
 SELECT section FROM students;
 ```
-
-</details>
 
 ---
 
@@ -382,11 +297,20 @@ SELECT section FROM students;
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/your-feature`
-3. Commit your changes: `git commit -m 'Add some feature'`
-4. Push to the branch: `git push origin feature/your-feature`
-5. Open a Pull Request
+1. Fork the repository.
+2. Create a feature branch:
+   ```bash
+   git checkout -b feature/your-feature
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Add some feature"
+   ```
+4. Push the branch:
+   ```bash
+   git push origin feature/your-feature
+   ```
+5. Open a Pull Request.
 
 ---
 
