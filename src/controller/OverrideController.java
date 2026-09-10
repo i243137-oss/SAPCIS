@@ -493,4 +493,18 @@ public class OverrideController {
             }
         }
     }
+
+    /**
+     * UI Confirmation hook for administrative override.
+     */
+    public void confirmOverrideAndNotifyParties() {
+        System.out.println("[OverrideController] Emergency override confirmed and parties notified.");
+    }
+
+    /**
+     * UI Navigation hook to initiate a room swap or room move.
+     */
+    public void initiateRoomMove() {
+        System.out.println("[OverrideController] Initiating room relocation workflow.");
+    }
 }

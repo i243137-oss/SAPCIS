@@ -30,6 +30,10 @@ public class LoginUIController {
 
         String role = authController.login(email, password);
         if (role != null) {
+            model.User user = authController.loadUserByEmail(email);
+            if (user != null) {
+                utils.UserSession.getInstance().setCurrentUser(user);
+            }
             showMessage("Welcome! Logged in as: " + role, "message-success");
             // Navigate to appropriate dashboard based on role
             navigateToDashboard(role);

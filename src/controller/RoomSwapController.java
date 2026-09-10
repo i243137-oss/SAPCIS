@@ -290,4 +290,19 @@ public class RoomSwapController {
             return createRequest(conn, classId, reason, capacity, status);
         }
     }
+
+    /**
+     * Allows a teacher or admin to request a swap specifically for an explicit room ID.
+     */
+    public String requestSpecificRoom(String classId, String roomId, String reason) throws SQLException {
+        String fullReason = (reason != null ? reason : "") + " [Target Room: " + roomId + "]";
+        return requestRoomSwap(classId, fullReason, 1);
+    }
+
+    /**
+     * Confirmation display hook for UI controllers.
+     */
+    public void showSwapPendingConfirmation() {
+        System.out.println("[RoomSwapController] Room swap request submitted successfully and is pending administrative review.");
+    }
 }

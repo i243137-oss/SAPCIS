@@ -9,7 +9,7 @@ public class ClassroomDAO {
 
     public String getCurrentConstraints(String roomId) throws SQLException {
         String query = "SELECT capacity, hasProjector FROM classrooms WHERE roomId = ?";
-        try (Connection conn = DBConnection.getInstance();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, roomId);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -26,7 +26,7 @@ public class ClassroomDAO {
     public List<String> getRuleCategories() throws SQLException {
         List<String> categories = new ArrayList<>();
         String query = "SELECT DISTINCT type FROM rules";
-        try (Connection conn = DBConnection.getInstance();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {

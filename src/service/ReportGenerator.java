@@ -11,16 +11,16 @@ public class ReportGenerator {
      * Strategy selected by reportType string
      */
     public Object buildReport(String reportType, Object historicalDataSet) throws Exception {
-        if (reportType.equals("Classroom Utilization")) {
+        if ("Classroom Utilization".equalsIgnoreCase(reportType)) {
             // Strategy A
             Object stats = computeUtilizationStats();
             return renderChart(stats);
-        } else if (reportType.equals("Faculty Delays")) {
+        } else if ("Faculty Delays".equalsIgnoreCase(reportType)) {
             // Strategy B (alt SSD)
             Object stats = computeDelayStats();
             return renderDelayStatistics(stats);
         }
-        throw new Exception("UnsupportedReportTypeException: " + reportType); // Matches the exception logic in plan
+        throw new exception.UnsupportedReportTypeException(reportType);
     }
 
     public Object computeUtilizationStats() {

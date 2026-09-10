@@ -15,7 +15,7 @@ public class SessionRepositoryDAO {
     public Map<String, Integer> aggregateSessionStates() throws SQLException {
         Map<String, Integer> states = new HashMap<>();
         String query = "SELECT status, COUNT(*) as count FROM class_sessions GROUP BY status";
-        try (Connection conn = DBConnection.getInstance();
+        try (Connection conn = DBConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {

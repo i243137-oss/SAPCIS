@@ -30,3 +30,13 @@ sqljdbc_13.4.0.0_enu/
 
 # ── Build artifacts ───────────────────────────────────────────
 *.log
+
+# ── Secrets & Environment Variables ───────────────────────────
+db.properties
+src/db.properties
+.env
+.env.local
+.env.*.local
+node_modules/
+dist/
+

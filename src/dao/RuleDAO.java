@@ -8,7 +8,7 @@ public class RuleDAO {
 
     public void create(Rule rule) throws SQLException {
         String query = "INSERT INTO rules (ruleId, ruleName, description, type, value, isActive) VALUES (?, ?, ?, ?, ?, ?)";
-        try (Connection conn = DBConnection.getInstance();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, rule.getRuleId());
             stmt.setString(2, rule.getRuleName());
@@ -22,7 +22,7 @@ public class RuleDAO {
 
     public void applyRule(String ruleId) throws SQLException {
         String query = "UPDATE rules SET isActive = 1 WHERE ruleId = ?";
-        try (Connection conn = DBConnection.getInstance();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, ruleId);
             stmt.executeUpdate();

@@ -1,0 +1,8 @@
+# =============================================================================
+# SAPCIS Database Configuration Template
+# Copy this file to 'db.properties' and fill in your actual credentials.
+# =============================================================================
+
+db.url=jdbc:sqlserver://localhost:1433;databaseName=sapcis;encrypt=true;trustServerCertificate=true;
+db.user=sa
+db.password=your_database_password_here

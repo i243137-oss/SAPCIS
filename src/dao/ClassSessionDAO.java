@@ -10,7 +10,7 @@ public class ClassSessionDAO {
     
     public ClassSession getSessionDetails(String sessionId) throws SQLException {
         String query = "SELECT * FROM class_sessions WHERE sessionId = ?";
-        try (Connection conn = DBConnection.getInstance();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, sessionId);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -31,7 +31,7 @@ public class ClassSessionDAO {
 
     public void updateSessionStatus(String sessionId, String newStatus) throws SQLException {
         String query = "UPDATE class_sessions SET status = ? WHERE sessionId = ?";
-        try (Connection conn = DBConnection.getInstance();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, newStatus);
             stmt.setString(2, sessionId);
@@ -41,7 +41,7 @@ public class ClassSessionDAO {
 
     public void updateRoom(String sessionId, String newRoomId) throws SQLException {
         String query = "UPDATE class_sessions SET roomNumber = ? WHERE sessionId = ?";
-        try (Connection conn = DBConnection.getInstance();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, newRoomId);
             stmt.setString(2, sessionId);
@@ -51,8 +51,8 @@ public class ClassSessionDAO {
 
     public List<String> fetchEnrolledStudents(String classId) throws SQLException {
         List<String> studentIds = new ArrayList<>();
-        String query = "SELECT dataValue FROM timetable_db WHERE sessionId = ? AND dataType = 'ENROLLMENT'";
-        try (Connection conn = DBConnection.getInstance();
+        String query = "SELECT dataValue FROM timetable_db WHERE sessionId = ? AND (dataType = 'STUDENT_ENROLLMENT' OR dataType = 'ENROLLMENT')";
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, classId);
             try (ResultSet rs = stmt.executeQuery()) {

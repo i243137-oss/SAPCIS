@@ -13,7 +13,7 @@ public class DailyScheduleDAO {
     public DailySchedule getDailySchedule(Date date) throws SQLException {
         List<ClassSession> sessions = new ArrayList<>();
         String query = "SELECT * FROM class_sessions";
-        try (Connection conn = DBConnection.getInstance();
+        try (Connection conn = DBConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {

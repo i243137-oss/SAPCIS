@@ -9,7 +9,7 @@ public class RoomRepositoryDAO {
 
     public boolean checkRoomAvailability(int capacity) throws SQLException {
         String query = "SELECT COUNT(*) FROM classrooms WHERE capacity >= ?";
-        try (Connection conn = DBConnection.getInstance();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, capacity);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -24,7 +24,7 @@ public class RoomRepositoryDAO {
     public List<String> queryAvailableRooms() throws SQLException {
         List<String> availableRooms = new ArrayList<>();
         String query = "SELECT roomId FROM classrooms";
-        try (Connection conn = DBConnection.getInstance();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {

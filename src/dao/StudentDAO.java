@@ -13,7 +13,7 @@ public class StudentDAO {
         String query = "SELECT cs.* FROM class_sessions cs " +
                        "JOIN timetable_db t ON cs.sessionId = t.sessionId " +
                        "WHERE t.dataValue = ? AND t.dataType = 'STUDENT_ENROLLMENT'";
-        try (Connection conn = DBConnection.getInstance();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, studentId);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -37,7 +37,7 @@ public class StudentDAO {
         String query = "SELECT cs.* FROM class_sessions cs " +
                        "JOIN timetable_db t ON cs.sessionId = t.sessionId " +
                        "WHERE t.dataValue = ? AND t.dataType = 'STUDENT_ENROLLMENT' AND cs.status = ?";
-        try (Connection conn = DBConnection.getInstance();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, studentId);
             stmt.setString(2, status);

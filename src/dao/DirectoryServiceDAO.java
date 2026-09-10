@@ -11,7 +11,7 @@ public class DirectoryServiceDAO {
     public List<Teacher> getFreeTeachers(String timetableSlot) throws SQLException {
         List<Teacher> freeTeachers = new ArrayList<>();
         String query = "SELECT * FROM users WHERE role = 'Teacher'"; 
-        try (Connection conn = DBConnection.getInstance();
+        try (Connection conn = DBConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
@@ -27,7 +27,7 @@ public class DirectoryServiceDAO {
 
     public Teacher searchTeacherByName(String name) throws SQLException {
         String query = "SELECT * FROM users WHERE role = 'Teacher' AND name = ?";
-        try (Connection conn = DBConnection.getInstance();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, name);
             try (ResultSet rs = stmt.executeQuery()) {

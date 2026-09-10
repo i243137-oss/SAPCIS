@@ -353,4 +353,50 @@ public class SubstituteController {
         }
         return rows;
     }
+
+    /**
+     * Assigns a substitute teacher for an original teacher (used by AdminSubstituteUIController).
+     */
+    public void assignTeacher(String originalTeacherId, String substituteTeacherId) throws SQLException {
+        try (Connection c = DBConnection.getConnection();
+             PreparedStatement s = c.prepareStatement(
+                 "SELECT TOP 1 assignmentId FROM teacher_assignments WHERE teacherUid = ? ORDER BY assignmentId DESC")) {
+            s.setString(1, originalTeacherId);
+            try (ResultSet rs = s.executeQuery()) {
+                int assignId = 1;
+                if (rs.next()) {
+                    assignId = rs.getInt("assignmentId");
+                }
+                proposeSubstitute(assignId, originalTeacherId, substituteTeacherId, "Administrative Assignment");
+            }
+        }
+    }
+
+    /**
+     * Handles substitute response (accept or decline) from AdminSubstituteUIController.
+     */
+    public void handleSubstituteResponse(String teacherId, String sessionId, boolean accepted, String reason) {
+        try {
+            if (accepted) {
+                try (Connection c = DBConnection.getConnection();
+                     PreparedStatement s = c.prepareStatement(
+                         "UPDATE TOP (1) substitute_assignments SET status = 'ACCEPTED', respondedAt = GETDATE() "
+                       + "WHERE substituteTeacherUid = ? AND status = 'PENDING'")) {
+                    s.setString(1, teacherId);
+                    s.executeUpdate();
+                }
+            } else {
+                rejectSubstituteByTeacher(teacherId, reason);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error handling substitute response: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Reopens substitute search upon decline.
+     */
+    public void reopenSubstituteSearch() {
+        System.out.println("[SubstituteController] Reopening search for substitute teachers.");
+    }
 }

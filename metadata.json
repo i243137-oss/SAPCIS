@@ -1,0 +1,6 @@
+{
+  "name": "SAPCIS - Smart Academic Planning & Class Information System",
+  "description": "University class scheduling, real-time timetable presence, emergency status overrides, substitute assignments, and room swap management system.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
