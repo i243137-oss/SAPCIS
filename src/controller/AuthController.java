@@ -178,6 +178,7 @@ public class AuthController {
     /**
      * @deprecated Use getDepartmentsForBatch(batch) for cascaded loading.
      */
+    @Deprecated
     public List<String> getDepartments() {
         List<String> depts = fetchDistinct(
                 "SELECT deptName FROM departments ORDER BY deptName ASC", "deptName");

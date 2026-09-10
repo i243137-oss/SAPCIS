@@ -2,7 +2,7 @@
 bin/
 *.class
 *.jar
-!lib/mssql-jdbc.jar
+!lib/*.jar
 
 # ── SQL files — exclude migration/fix scripts, keep only main schema ──
 diagnose_teacher_mapping.sql

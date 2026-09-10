@@ -15,11 +15,23 @@
     </path>
 
     <target name="init">
+        <mkdir dir="${lib.dir}"/>
         <mkdir dir="${classes.dir}"/>
         <mkdir dir="${dist.dir}"/>
+        <available property="javafx.available" classname="javafx.scene.control.TableColumn" classpathref="classpath"/>
     </target>
 
-    <target name="compile" depends="init" description="compile the source">
+    <!-- Automatically fetches JavaFX & JDBC dependencies if not bundled in the JDK -->
+    <target name="resolve-deps" depends="init" unless="javafx.available" description="Download JavaFX and JDBC libraries if missing">
+        <echo message="JavaFX not detected in JDK runtime. Resolving dependencies to ${lib.dir}..."/>
+        <get src="https://repo1.maven.org/maven2/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2-linux.jar" dest="${lib.dir}/javafx-base-17.0.2.jar" skipexisting="true" ignoreerrors="true"/>
+        <get src="https://repo1.maven.org/maven2/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2-linux.jar" dest="${lib.dir}/javafx-graphics-17.0.2.jar" skipexisting="true" ignoreerrors="true"/>
+        <get src="https://repo1.maven.org/maven2/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2-linux.jar" dest="${lib.dir}/javafx-controls-17.0.2.jar" skipexisting="true" ignoreerrors="true"/>
+        <get src="https://repo1.maven.org/maven2/org/openjfx/javafx-fxml/17.0.2/javafx-fxml-17.0.2-linux.jar" dest="${lib.dir}/javafx-fxml-17.0.2.jar" skipexisting="true" ignoreerrors="true"/>
+        <get src="https://repo1.maven.org/maven2/com/microsoft/sqlserver/mssql-jdbc/12.4.2.jre11/mssql-jdbc-12.4.2.jre11.jar" dest="${lib.dir}/mssql-jdbc.jar" skipexisting="true" ignoreerrors="true"/>
+    </target>
+
+    <target name="compile" depends="init,resolve-deps" description="compile the source">
         <!-- Copy non-java resource files such as .fxml, .css, .properties -->
         <copy todir="${classes.dir}">
             <fileset dir="${src.dir}">
@@ -29,7 +41,9 @@
         <!-- Copy root db.properties if exists -->
         <copy file="db.properties" todir="${classes.dir}" failonerror="false"/>
 
-        <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" includeantruntime="false" source="11" target="11" debug="true"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" includeantruntime="false" source="11" target="11" debug="true">
+            <compilerarg value="-Xlint:-options"/>
+        </javac>
     </target>
 
     <target name="dist" depends="compile" description="generate the distribution jar">

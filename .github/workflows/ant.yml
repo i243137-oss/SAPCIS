@@ -16,10 +16,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up JDK 11
+    - name: Set up Liberica JDK with JavaFX
       uses: actions/setup-java@v4
       with:
-        java-version: '11'
-        distribution: 'temurin'
+        java-version: '17'
+        distribution: 'liberica'
+        java-package: 'jdk+fx'
     - name: Build with Ant
       run: ant -noinput -buildfile build.xml
